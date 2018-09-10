@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="listArray">
+        <item>10</item>
+        <item>20</item>
+        <item>30</item>
+        <item>40</item>
+    </string-array>
+
+    <string-array name="listValues">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
+
+    <string-array name="themeArray">
+        <item>Eggplant</item>
+        <item>Earthy</item>
+        <item>CottonCandy</item>
+    </string-array>
+
+    <string-array name="themeValues">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
+    <string-array name="news_source_pref">
+        <item>Arstechnica</item>
+        <item>Reuters</item>
+        <item>CNBC</item>
+        <item>Washington Post</item>
+        <item>WallStreetJournal</item>
+        <item>Daily Caller</item>
+        <item>Polygon</item>
+        <item>Siliconera</item>
+        <item>Gamespot</item>
+        <item>Anime News Network</item>
+        <item>Crunchyroll</item>
+    </string-array>
+
+    <string-array name="newsvalues_source_pref">
+        <item>arsetechnica</item>
+        <item>reuters</item>
+        <item>cnbc</item>
+        <item>washington_post</item>
+        <item>wallStreet_journal</item>
+        <item>daily_caller</item>
+        <item>polygon</item>
+        <item>siliconera</item>
+        <item>gamespot</item>
+        <item>anime_news_network</item>
+        <item>crunchyroll</item>
+    </string-array>
+
+    <string-array name="default_array">
+        <item>arsetechnica</item>
+        <item>reuters</item>
+        <item>cnbc</item>
+        <item>washington_post</item>
+        <item>wallStreet_journal</item>
+        <item>daily_caller</item>
+        <item>polygon</item>
+        <item>siliconera</item>
+        <item>gamespot</item>
+        <item>anime_news_network</item>
+        <item>crunchyroll</item>
+    </string-array>
+</resources>
