@@ -3,6 +3,7 @@ package org.example.trongnguyen.newsreader;
 import android.app.LoaderManager;
 import android.content.Loader;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -31,6 +32,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // For first time runs, the preferences will not load quick enough and cause the app
+        // to crash due to not having the right preferences to create a URL. This time
+        // makes sure that default values are implemented first and then never read from again.
+        PreferenceManager.setDefaultValues(this, R.xml.settings_main, false);
+
         setContentView(R.layout.activity_main_fragments);
         // Inflate the toolbar and set the title to NewsFeed. This will be our main page.
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

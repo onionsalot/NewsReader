@@ -135,41 +135,43 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
         StringBuilder stringBuilder = new StringBuilder();
         // StringBuilder will check if user has checked each of the sources, then append the source.
         stringBuilder.append("(");
-        if (sources.contains("arstechnica")) {
-            stringBuilder.append("site%3Aarstechnica.com%20OR%20");
-        }
-        if (sources.contains("wired")) {
-            stringBuilder.append("site%3Awired.com%20OR%20");
-        }
-        if (sources.contains("reuters")) {
-            stringBuilder.append("site%3Areuters.com%20OR%20");
-        }
-        if (sources.contains("cnbc")) {
-            stringBuilder.append("site%3Acnbc.com%20OR%20");
-        }
-        if (sources.contains("washington_post")) {
-            stringBuilder.append("site%3Awashingtonpost.com%20OR%20");
-        }
-        if (sources.contains("wallstreet_journal")) {
-            stringBuilder.append("site%3Awsj.com%20OR%20");
-        }
-        if (sources.contains("daily_caller")) {
-            stringBuilder.append("site%3Adailycaller.com%20OR%20");
-        }
-        if (sources.contains("polygon")) {
-            stringBuilder.append("site%3Apolygon.com%20OR%20");
-        }
-        if (sources.contains("siliconera")) {
-            stringBuilder.append("site%3Asiliconera.com%20OR%20");
-        }
-        if (sources.contains("gamespot")) {
-            stringBuilder.append("site%3Agamespot.com%20OR%20");
-        }
-        if (sources.contains("anime_news_network")) {
-            stringBuilder.append("site%3Aanimenewsnetwork.com%20OR%20");
-        }
-        if (sources.contains("crunchyroll")) {
-            stringBuilder.append("site%3Acrunchyroll.com%20OR%20");
+        if (sources != null) {
+            if (sources.contains("arstechnica")) {
+                stringBuilder.append("site%3Aarstechnica.com%20OR%20");
+            }
+            if (sources.contains("wired")) {
+                stringBuilder.append("site%3Awired.com%20OR%20");
+            }
+            if (sources.contains("reuters")) {
+                stringBuilder.append("site%3Areuters.com%20OR%20");
+            }
+            if (sources.contains("cnbc")) {
+                stringBuilder.append("site%3Acnbc.com%20OR%20");
+            }
+            if (sources.contains("washington_post")) {
+                stringBuilder.append("site%3Awashingtonpost.com%20OR%20");
+            }
+            if (sources.contains("wallstreet_journal")) {
+                stringBuilder.append("site%3Awsj.com%20OR%20");
+            }
+            if (sources.contains("daily_caller")) {
+                stringBuilder.append("site%3Adailycaller.com%20OR%20");
+            }
+            if (sources.contains("polygon")) {
+                stringBuilder.append("site%3Apolygon.com%20OR%20");
+            }
+            if (sources.contains("siliconera")) {
+                stringBuilder.append("site%3Asiliconera.com%20OR%20");
+            }
+            if (sources.contains("gamespot")) {
+                stringBuilder.append("site%3Agamespot.com%20OR%20");
+            }
+            if (sources.contains("anime_news_network")) {
+                stringBuilder.append("site%3Aanimenewsnetwork.com%20OR%20");
+            }
+            if (sources.contains("crunchyroll")) {
+                stringBuilder.append("site%3Acrunchyroll.com%20OR%20");
+            }
         }
         stringBuilder.replace(stringBuilder.length()-5,stringBuilder.length(),"");
         stringBuilder.append(")");
