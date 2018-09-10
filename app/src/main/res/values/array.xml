@@ -5,6 +5,7 @@
         <item>20</item>
         <item>30</item>
         <item>40</item>
+        <item>50</item>
     </string-array>
 
     <string-array name="listValues">
@@ -12,6 +13,7 @@
         <item>2</item>
         <item>3</item>
         <item>4</item>
+        <item>5</item>
     </string-array>
 
     <string-array name="themeArray">
@@ -28,6 +30,7 @@
 
     <string-array name="news_source_pref">
         <item>Arstechnica</item>
+        <item>Wired</item>
         <item>Reuters</item>
         <item>CNBC</item>
         <item>Washington Post</item>
@@ -41,11 +44,12 @@
     </string-array>
 
     <string-array name="newsvalues_source_pref">
-        <item>arsetechnica</item>
+        <item>arstechnica</item>
+        <item>wired</item>
         <item>reuters</item>
         <item>cnbc</item>
         <item>washington_post</item>
-        <item>wallStreet_journal</item>
+        <item>wallstreet_journal</item>
         <item>daily_caller</item>
         <item>polygon</item>
         <item>siliconera</item>
@@ -55,11 +59,12 @@
     </string-array>
 
     <string-array name="default_array">
-        <item>arsetechnica</item>
+        <item>arstechnica</item>
+        <item>wired</item>
         <item>reuters</item>
         <item>cnbc</item>
         <item>washington_post</item>
-        <item>wallStreet_journal</item>
+        <item>wallstreet_journal</item>
         <item>daily_caller</item>
         <item>polygon</item>
         <item>siliconera</item>

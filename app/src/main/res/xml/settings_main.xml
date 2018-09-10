@@ -11,6 +11,12 @@
             android:entryValues="@array/themeValues" />
     </PreferenceCategory>
     <PreferenceCategory android:title="Results Displayed" >
+        <!--suppress AndroidDomInspection -->
+        <EditTextPreference
+            android:key="topic_text"
+            android:summary="This is your default search topics on the home screen. Type in a topic if you want to find only articles from your default news organizations about a certain topic or leave blank to grab only the headlines from your favorite news organizations. Default = blank"
+            android:title="Topics"
+            android:defaultValue=""/>
         <MultiSelectListPreference
             android:title="Default News Organization"
             android:dialogTitle="Select your news source(s)"

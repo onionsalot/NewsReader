@@ -1,8 +1,10 @@
 package org.example.trongnguyen.newsreader.fragments;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
@@ -27,6 +29,7 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 public class MainFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<News>>{
     // How the Webhose.io API is constructed, laid out in a readable manner.
@@ -35,7 +38,7 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
                     "?token=da31bd42-351a-40ab-b014-ac6944b07a65" +
                     "&format=json" +
                     "&ts=1534820444293" +
-                    "&sort=relevancy" +
+                    "&sort=published" +
                     "&q=language%3Aenglish" +
                     "%20site_type%3Anews" +
                     "%20is_first%3Atrue" +
@@ -53,6 +56,16 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
                         "%20OR%20site%3Aanimenewsnetwork.com" +
                         "%20OR%20site%3Acrunchyroll.com)" +
                     "%20thread.title%3ASpider";
+    private static final String NEWS_BASE_URL1 =
+            "http://webhose.io/filterWebContent" +
+                    "?token=da31bd42-351a-40ab-b014-ac6944b07a65" +
+                    "&format=json";
+    private static final String NEWS_BASE_URL2 =
+                    "&sort=published" +
+                    "&q=language%3Aenglish" +
+                    "%20site_type%3Anews" +
+                    "%20is_first%3Atrue" +
+                    "%20thread.country%3AUS";
     private static final String TAG = "----Main fragment---~";
     private NewsAdapter mAdapter;
     View rootView;
@@ -75,6 +88,7 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
         Log.d(TAG, "onCreate Initialized");
         // Retain the instance between configuration changes
         setRetainInstance(true);
+
 
         // OnCreate is not called again in the lifecycle is rotated so the adapter is initiated here.
         mAdapter = new NewsAdapter(getActivity(), 0, new ArrayList<News>());  // Get a reference to the LoaderManager, in order to interact with loaders.
@@ -113,15 +127,66 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
         return rootView;
     }
 
+    private String formURL() {
+        // Initialize shared preferences and get the Set<String> of our multiple_choice_prefs.
+        // We will construct the news source section first.
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        Set<String> sources = sp.getStringSet("multiple_choice_prefs", null);
+        StringBuilder stringBuilder = new StringBuilder();
+        // StringBuilder will check if user has checked each of the sources, then append the source.
+        stringBuilder.append("(");
+        if (sources.contains("arstechnica")) {
+            stringBuilder.append("site%3Aarstechnica.com%20OR%20");
+        }
+        if (sources.contains("wired")) {
+            stringBuilder.append("site%3Awired.com%20OR%20");
+        }
+        if (sources.contains("reuters")) {
+            stringBuilder.append("site%3Areuters.com%20OR%20");
+        }
+        if (sources.contains("cnbc")) {
+            stringBuilder.append("site%3Acnbc.com%20OR%20");
+        }
+        if (sources.contains("washington_post")) {
+            stringBuilder.append("site%3Awashingtonpost.com%20OR%20");
+        }
+        if (sources.contains("wallstreet_journal")) {
+            stringBuilder.append("site%3Awsj.com%20OR%20");
+        }
+        if (sources.contains("daily_caller")) {
+            stringBuilder.append("site%3Adailycaller.com%20OR%20");
+        }
+        if (sources.contains("polygon")) {
+            stringBuilder.append("site%3Apolygon.com%20OR%20");
+        }
+        if (sources.contains("siliconera")) {
+            stringBuilder.append("site%3Asiliconera.com%20OR%20");
+        }
+        if (sources.contains("gamespot")) {
+            stringBuilder.append("site%3Agamespot.com%20OR%20");
+        }
+        if (sources.contains("anime_news_network")) {
+            stringBuilder.append("site%3Aanimenewsnetwork.com%20OR%20");
+        }
+        if (sources.contains("crunchyroll")) {
+            stringBuilder.append("site%3Acrunchyroll.com%20OR%20");
+        }
+        stringBuilder.replace(stringBuilder.length()-5,stringBuilder.length(),"");
+        stringBuilder.append(")");
 
+        // After appending the URL, we check if the user had specified a certain topic of interest.
+        // If the user entered in anything and did not leave the topic_text preference empty,
+        // append that into the end of the URL and return it.
+        String topicString = sp.getString("topic_text", "").trim();
+        if (!(topicString.equals(""))) {
+            stringBuilder.append("%20thread.title%3A").append(sp.getString("topic_text", ""));
+        }
+        return stringBuilder.toString();
+    }
 
     @Override
     public void onStart() {
         Log.d(TAG, "onStart Initialized");
-        Date currentDate = new Date();
-        currentDate.getTime();
-        Log.d(TAG, "onStart: " + (currentDate.getTime() - 1728000000L));
-        // 20 days in the past from today
         super.onStart();
     }
 
@@ -129,8 +194,17 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
     public Loader<List<News>> onCreateLoader(int id, Bundle args) {
         // Creates a new loader for the given URL
         Log.d(TAG, "onCreateLoader: Starts");
-        // returning the URL passed in..
-        return new NewsLoader(getActivity(),NEWS_STATIC_URL);
+        //========== Create the URL using user preferences starts here ===================================
+        // Construct the date to be placed in. We are printing all articles that are crawled within the last 20 days
+        Date currentDate = new Date();
+        String urlTime = "&ts=" + String.valueOf(currentDate.getTime() - 1728000000L);
+        // call the formURL function up top and gather information about the user preferences.
+        String urlSources = formURL();
+        // Form the URL
+        String fullURL = NEWS_BASE_URL1 + urlTime + NEWS_BASE_URL2 + urlSources;
+        Log.d(TAG, "onCreateLoader: Full URl after user preferences taken into account\n" + fullURL);
+        // Return the results with the specified URL
+        return new NewsLoader(getActivity(),fullURL);
     }
 
     @Override
