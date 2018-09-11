@@ -25,13 +25,6 @@
             android:key="multiple_choice_prefs"
             android:summary="Press to show list of available sites. Default = all"
             android:defaultValue="@array/default_array"/>
-        <ListPreference
-            android:title="Results per search (10)"
-            android:summary="Select the amount of results you wish to display (40 max)"
-            android:key="resultsReturned"
-            android:defaultValue="1"
-            android:entries="@array/listArray"
-            android:entryValues="@array/listValues" />
     </PreferenceCategory>
 
 </PreferenceScreen>

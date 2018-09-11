@@ -1,5 +1,6 @@
 package org.example.trongnguyen.newsreader.fragments;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
@@ -15,8 +16,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import org.example.trongnguyen.newsreader.DetailsActivity;
 import org.example.trongnguyen.newsreader.News;
@@ -65,9 +69,12 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
                     "&q=language%3Aenglish" +
                     "%20site_type%3Anews" +
                     "%20is_first%3Atrue" +
-                    "%20thread.country%3AUS";
+                    "%20thread.country%3AUS%20";
     private static final String TAG = "----Main fragment---~";
     private NewsAdapter mAdapter;
+    private List<News> savedSession;
+    private boolean endOfList = false;
+    private boolean doNothing = false;
     View rootView;
     ListView listView;
     public MainFragment() { }
@@ -89,7 +96,6 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
         // Retain the instance between configuration changes
         setRetainInstance(true);
 
-
         // OnCreate is not called again in the lifecycle is rotated so the adapter is initiated here.
         mAdapter = new NewsAdapter(getActivity(), 0, new ArrayList<News>());  // Get a reference to the LoaderManager, in order to interact with loaders.
         getLoaderManager().initLoader(0, null, this);
@@ -98,8 +104,8 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
 
     /**
      *
-     * onCreateView is called after onCreate. Once we have the laoder and adapter initialized, we
-     * start processing the UI elements and inflate them into the flagment.
+     * onCreateView is called after onCreate. Once we have the loader and adapter initialized, we
+     * start processing the UI elements and inflate them into the fragment.
      *
      * This method also holds our onItemClick for the adapter.
      *
@@ -124,7 +130,66 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
                 startActivity(intent);
             }
         });
+
+        listView.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                if(firstVisibleItem+visibleItemCount == totalItemCount && totalItemCount!=0)
+                {
+                    if (doNothing) {
+                        // Do nothing here. This means end of list has been reached and footer has been printed
+                    } else {
+                        if (endOfList) {
+                            // If end of list has been reached and variable endOfList has been activated by addItems();
+                            // The following code will run to add a footer showing that the end of the list has been reached.
+                            // TODO: Make the footer not so ugly
+                            View footerView = ((LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.layout_footer, null, false);
+                            listView.addFooterView(footerView);
+                            doNothing = true;
+                        } else {
+                            addItems();
+                        }
+                    }
+                }
+            }
+        });
+
         return rootView;
+    }
+
+    /**
+     *
+     * This method was created to add more data into the list once the end of the list has been reached.
+     * Tests show that the memory consumption or memory saved is very minimal at best and I am unable
+     * to test in a wider environment, so with the theory that adding only the 0th element of the
+     * savedSession/data then immediately removing it will save on data, I used the same method I used
+     * to craft the initial list here.
+     * This appends the next item into the bottom of the list. Once the savedSession.size() = 0; we know that
+     * the data is at its end, which will activate endOfList bool and the list will no longer add items
+     * per scroll and instead, activate a footer to show the user that the end of the list has been reached.
+     *
+     */
+    private void addItems() {
+        int currentNum;
+        if (savedSession.size() > 10) {
+            currentNum = 10;
+        } else {
+            currentNum = savedSession.size();
+        }
+
+        Log.d(TAG, "addItems: adding items!!!!!----" + savedSession.size());
+        for(int i = 0; i < currentNum; i++) {
+            mAdapter.insert(savedSession.get(0), mAdapter.getCount());
+            savedSession.remove(0);
+        }
+        if (savedSession.size() == 0) {
+            endOfList = true;
+        }
     }
 
     private String formURL() {
@@ -214,10 +279,49 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
         // Update the UI with the result
         Log.d(TAG, "onLoadFinished: Start");
         // Similar to the onPostExecute. Basically updates UI
+        if (data == null) {
+            // Checks if we have proper data. If we don't then return user.
+            // TODO: create UI for users to know loading is happening
+            // TODO: create an emptyView
+            return;
+        }
+        /*
+        *
+        * Upon obtaining a valid list of news, the data will then be added onto the
+        * mAdapter which will then be displayed on the screen via the onCreateView method.
+        * Normally an mAdapter.addAll(data); would be the way to go, but in order to make the app
+        * only load the amount that the user wishes, a for loop which will add each individual view
+        * was created. This will also be helpful later when loading more data each time the user
+        * scrolls down.
+        *
+         */
+        // Checks how many results we have in data.size(). If the results are less than 10
+        // then only print out that amount. Normally our default print is 10.
+        int results;
+        Log.d(TAG, "onLoadFinished: current data" + data.size());
+        if (data.size() < 10) {
+            results = data.size();
+        } else {
+            results = 10;
+        }
 
-        // Upon obtaining a valid list of news, the data will then be added onto the
-        // mAdapter which will then be displayed on the screen via the onCreateView method.
-        mAdapter.addAll(data);
+        /*
+         *
+         * Once checks have been established, we make a for loop to get the data on the screen.
+         * We insert the information in index 0 of "data" one at a time into i+ index of mAdapter.
+         * Afterwards we remove the0th element of "data." this will shrink down the information in
+         * data thus should help with performance ever so slightly.
+         *
+          */
+        for (int i = 0; i < results; i++) {
+            mAdapter.insert(data.get(0), i);
+            data.remove(0);
+        }
+        // Save the data into savedSession to grab more elements later when end of scroll list is reached.
+        Log.d(TAG, "onLoadFinished: data after insertion" + data.size());
+        savedSession = data;
+
+
         // Once the Adapter has finished loading the data, he adapter will be destroyed to prevent
         // any reloading of data. This is to fix the issue of the adapter adding onto the end
         // of the data stream a new set of data each time the activity is destroyed.

@@ -44,7 +44,7 @@ public final class QueryTools {
         try {
             jsonResponse = makeHttpRequest(url);
         } catch (IOException e) {
-            // TODO handle IO exception
+            Log.e(TAG, "fetchNewsData: " + e);
         }
 
         ArrayList<News> items = extractFeatureFromJson(jsonResponse);
@@ -86,7 +86,7 @@ public final class QueryTools {
                 jsonResponse = readFromStream(inputStream);
             }
         } catch (IOException e) {
-            // TODO handle the exception
+            Log.e(TAG, "fetchNewsData: " + e);
         } finally {
             if (urlConnection != null) {
                 urlConnection.disconnect();
@@ -134,21 +134,14 @@ public final class QueryTools {
             Log.d(TAG, "extractFeatureFromJson: totalResults found= " + baseJsonResponse.getInt("totalResults"));
             // Another layer of checks to make sure newsArray "posts" is not empty which will cause a crash
             if (baseJsonResponse.getInt("totalResults") == 0) {
-                // TODO: Create case for returning 0 items
+                Log.d(TAG, "extractFeatureFromJson: 0 items returned. Passed back object will be null.");
             } else {
                 JSONArray newsArray = baseJsonResponse.getJSONArray("posts");
                 // Checks to see how many posts are returned. Will be using the user preferences
                 // to get the amount of results the user wishes to display on the screen at a time.
                 if (newsArray.length() > 0) {
-                    int resultsNum;
-                    if (newsArray.length() > 40) {
-                        resultsNum = 40;
-                    } else {
-                        resultsNum = newsArray.length();
-                    }
-
                     // Begin the process of grabbing the items. First loop through each item.
-                    for(int i = 0; i < resultsNum; i++) {
+                    for(int i = 0; i < newsArray.length(); i++) {
                         // Gets the the object position of newsArray then checks for "thread." As per the API,
                         // Post > Thread > 'others'
                         JSONObject initialItem = newsArray.getJSONObject(i);

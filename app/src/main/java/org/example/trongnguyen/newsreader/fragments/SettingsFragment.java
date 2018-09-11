@@ -40,15 +40,12 @@ public class SettingsFragment extends Fragment {
 
     public static class EarthquakePreferenceFragment extends PreferenceFragment {
         MultiSelectListPreference source;
-        ListPreference results;
         String themeChooserText;
-        String resultsReturnedText;
 
         @Override
         public void onCreate(Bundle savedInstanceState) {
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
             themeChooserText = prefs.getString("theme", "1");
-            resultsReturnedText = prefs.getString("resultsReturned", "1");
 
             super.onCreate(savedInstanceState);
 
@@ -60,21 +57,14 @@ public class SettingsFragment extends Fragment {
                 public boolean onPreferenceChange(Preference preference, Object newValue) {
                     // Will only process the changes if there is more than 1 item checked. Otherwise refuse change.
                     if (newValue.toString().equals("[]")) {
-                        Log.d(TAG, "onPreferenceChange: refuse the changes due to empty value");
+                        Toast.makeText(getActivity(), "Unable to save preferences. Please pick at least one source!",
+                                Toast.LENGTH_SHORT).show();
                         return false;
                     }
                     return true;
                 }
             });
-            results = (ListPreference) findPreference("resultsReturned");
-            results.setTitle("Results per search (" + resultsReturnedText + "0)");
-            results.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-                @Override
-                public boolean onPreferenceChange(Preference preference, Object newValue) {
-                    results.setTitle("Results per search (" + newValue.toString() + "0)");
-                    return true;
-                }
-            });
+
         }
     }
 
