@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -75,6 +76,10 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
     private List<News> savedSession;
     private boolean endOfList = false;
     private boolean doNothing = false;
+    private boolean dataFetched = false;
+    private SharedPreferences.OnSharedPreferenceChangeListener spChangedListener;
+    TextView emptyView;
+    ProgressBar progressBar;
     View rootView;
     ListView listView;
     public MainFragment() { }
@@ -82,6 +87,7 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
+        Log.d(TAG, "onSaveInstanceState: saved");
     }
 
     @Override
@@ -96,10 +102,35 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
         // Retain the instance between configuration changes
         setRetainInstance(true);
 
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        spChangedListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
+            @Override
+            public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+                Log.d(TAG, "onSharedPreferenceChanged: change detected");
+                clearAdapter();
+            }
+        };
+        sp.registerOnSharedPreferenceChangeListener(spChangedListener);
+
         // OnCreate is not called again in the lifecycle is rotated so the adapter is initiated here.
         mAdapter = new NewsAdapter(getActivity(), 0, new ArrayList<News>());  // Get a reference to the LoaderManager, in order to interact with loaders.
         getLoaderManager().initLoader(0, null, this);
+        dataFetched = true;
         super.onCreate(savedInstanceState);
+    }
+    @Override
+    public void onPause() {
+        Log.d(TAG, "onPause: called");
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        Log.d(TAG, "onResume: called");
+        super.onResume();
+        if (!dataFetched) {
+            createAdapter();
+        }
     }
 
     /**
@@ -116,6 +147,39 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
         Log.d(TAG, "onCreateView Initialized");
 
         rootView = inflater.inflate(R.layout.fragment_main, container, false);
+        // Find the views for both the emptyView and progressBar
+        progressBar = (ProgressBar) rootView.findViewById(R.id.progressBar);
+        emptyView = (TextView) rootView.findViewById(R.id.emptyView);
+
+        /*
+        *
+        * The following bit is used to check the session state.
+        * When the Fragment was created, the savedInstanceState will be called and save the state.
+        * We check this and see that if it is not null, that means that there was most likely an orientation
+        * change only. There is no need to do anything with the data.
+        *
+        * However, the problem exists where android will place the Fragment onPause() if placed in the backstack.
+        * Once restored from the backstack, the Fragment's saveInstanceState will always be null for some reason.
+        * To remedy this, we also check to see if savedSessions is null. By default, it will be null.
+        * Once it has been used, it will no longer be null but instead, once the data is all cleared out, it will
+        * remain as [] and not null. So if savedInstanceState and savedSession are both NOT null, this will be
+        * a completely new session (IE. opening the app cold) and would result in the progress bar showing
+        * until data is presented or data is invalid.
+        *
+         */
+        if (savedInstanceState != null) {
+            // Orientation change most likely.
+        } else {
+            if (savedSession != null) {
+                // Returning from backstack most likely. Do nothing
+                Log.d(TAG, "onCreateView: mAdapter is not null. Do nothing information is properly saved");
+            } else {
+                // New instance.
+                Log.d(TAG, "onCreateView: HUH WHAT IS THIS");
+                progressBar.setVisibility(View.VISIBLE);
+            }
+        }
+
         listView = (ListView) rootView.findViewById(R.id.news_list_view);
         listView.setAdapter(mAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -182,7 +246,7 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
             currentNum = savedSession.size();
         }
 
-        Log.d(TAG, "addItems: adding items!!!!!----" + savedSession.size());
+
         for(int i = 0; i < currentNum; i++) {
             mAdapter.insert(savedSession.get(0), mAdapter.getCount());
             savedSession.remove(0);
@@ -281,8 +345,12 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
         // Similar to the onPostExecute. Basically updates UI
         if (data == null) {
             // Checks if we have proper data. If we don't then return user.
-            // TODO: create UI for users to know loading is happening
             // TODO: create an emptyView
+            // Since there will be no results if data is null, we set emptyView to show users that
+            // there is no results to be displayed. Also disable the progress bar.
+            progressBar.setVisibility(View.INVISIBLE);
+            emptyView.setVisibility(View.VISIBLE);
+            emptyView.setText("No results found");
             return;
         }
         /*
@@ -321,7 +389,8 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
         Log.d(TAG, "onLoadFinished: data after insertion" + data.size());
         savedSession = data;
 
-
+        // Once information is loaded, make the progress bar invisible again.
+        progressBar.setVisibility(View.INVISIBLE);
         // Once the Adapter has finished loading the data, he adapter will be destroyed to prevent
         // any reloading of data. This is to fix the issue of the adapter adding onto the end
         // of the data stream a new set of data each time the activity is destroyed.
@@ -335,5 +404,24 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
         mAdapter.clear();
     }
 
+    private void clearAdapter() {
+        mAdapter.clear();
+        savedSession.clear();
+        listView.setAdapter(null);
+        dataFetched= false;
+        endOfList = false;
+        doNothing = false;
+        progressBar.setVisibility(View.INVISIBLE);
+        emptyView.setVisibility(View.INVISIBLE);
+        getLoaderManager().destroyLoader(0);
+    }
+
+    private void createAdapter() {
+        mAdapter = new NewsAdapter(getActivity(), 0, new ArrayList<News>());  // Get a reference to the LoaderManager, in order to interact with loaders.
+        getLoaderManager().initLoader(0, null, this);
+        dataFetched = true;
+        progressBar.setVisibility(View.VISIBLE);
+        listView.setAdapter(mAdapter);
+    }
 
 }

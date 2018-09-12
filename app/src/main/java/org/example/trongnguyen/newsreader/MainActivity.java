@@ -87,43 +87,26 @@ public class MainActivity extends AppCompatActivity {
         * there is no real need for backstacks are "searches" and "details" are both performed on exterior
         * Intents.
         *
+        * REVISED*
+        *
          */
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.nav_home:
-                        if (getSupportFragmentManager().findFragmentByTag("settings") != null) {
-                            getSupportFragmentManager().beginTransaction().hide(getSupportFragmentManager().findFragmentByTag("settings")).commit();
-                        }
-                        if (getSupportFragmentManager().findFragmentByTag("favorites") != null) {
-                            getSupportFragmentManager().beginTransaction().hide(getSupportFragmentManager().findFragmentByTag("favorites")).commit();
-                        }
-
-                        if (getSupportFragmentManager().findFragmentByTag("main") != null ) {
-                            getSupportFragmentManager().beginTransaction().show(getSupportFragmentManager().findFragmentByTag("main")).commit();
-
+                        if (getSupportFragmentManager().findFragmentByTag("main").isVisible()) {
+                            // DO NOTHING
                         } else {
-                            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container,
-                                    new MainFragment(), "main").commit();
+                            getSupportFragmentManager().popBackStackImmediate();
                         }
                         searchItem.setVisible(true);
                         break;
                     case R.id.nav_settings:
-                        if (getSupportFragmentManager().findFragmentByTag("favorites") != null) {
-                            getSupportFragmentManager().beginTransaction().hide(getSupportFragmentManager().findFragmentByTag("favorites")).commit();
-                        }
-                        if (getSupportFragmentManager().findFragmentByTag("main") != null) {
-                            Log.d(TAG, "onNavigationItemSelected: is now hidden");
-                            getSupportFragmentManager().beginTransaction().hide(getSupportFragmentManager().findFragmentByTag("main")).commit();
-                        }
-
-                        if (getSupportFragmentManager().findFragmentByTag("settings") != null ) {
-                            getSupportFragmentManager().beginTransaction().show(getSupportFragmentManager().findFragmentByTag("settings")).commit();
-
-                        } else {
-                            // Fragment has never been created. Create a brand new one
-                            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container,
+                        // Fragment has never been created. Create a brand new one
+                        if (getSupportFragmentManager().findFragmentByTag("main").isVisible()) {
+                            getSupportFragmentManager().beginTransaction()
+                                    .addToBackStack("mainStack").replace(R.id.fragment_container,
                                     new SettingsFragment(), "settings").commit();
                         }
                         searchItem.setVisible(false);
