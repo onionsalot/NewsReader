@@ -23,9 +23,11 @@ import static android.content.ContentValues.TAG;
 public class NewsAdapter extends ArrayAdapter<News>{
     ViewHolder holder;
     Context mContext;
-    public NewsAdapter(@NonNull Context context, int resource, @NonNull List<News> objects) {
+    int mLayout;
+    public NewsAdapter(@NonNull Context context, int resource, @NonNull List<News> objects, int layout) {
         super(context, resource, objects);
         mContext = context;
+        mLayout = layout;
     }
 
     /*
@@ -43,10 +45,15 @@ public class NewsAdapter extends ArrayAdapter<News>{
         View listItemView = convertView;
         // Initiate the holder
         holder = null;
-        Log.d(TAG, "getView called. New listView added most likely.");
         if(listItemView == null) {
             Log.d(TAG, "getView: holder initiated");
-            listItemView = LayoutInflater.from(getContext()).inflate(R.layout.news_items,parent, false);
+            if (mLayout == 0) {
+                listItemView = LayoutInflater.from(getContext()).inflate(R.layout.news_items, parent, false);
+            } else if (mLayout == 1){
+                listItemView = LayoutInflater.from(getContext()).inflate(R.layout.news_items_small, parent, false);
+            } else {
+                listItemView = LayoutInflater.from(getContext()).inflate(R.layout.news_items, parent, false);
+            }
             holder = new ViewHolder();
             holder.newsTitle = (TextView) listItemView.findViewById(R.id.article_title);
             holder.newsAuthor = (TextView) listItemView.findViewById(R.id.article_author);
@@ -72,7 +79,9 @@ public class NewsAdapter extends ArrayAdapter<News>{
         * site - Date
         *    Main text
          */
-        holder.newsDescription.setText(w.getDate() + "-" + "\n" + w.getDescription());
+        if (mLayout != 1) {
+            holder.newsDescription.setText(w.getDate() + "-" + "\n" + w.getDescription());
+        }
 
         // Picture
         /*

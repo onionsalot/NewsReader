@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "//---MainActivity---//";
     private DrawerLayout drawer;
     MenuItem searchItem;
+    int fragmentSelected; // 0 = Main; 1 = Settings; 2 = Favorites
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,18 +58,19 @@ public class MainActivity extends AppCompatActivity {
         NavigationView navigationView = findViewById(R.id.nav_view);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawer,toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
-        toggle.syncState();
+
 
         /* SavedInstanceState usually only is not null if the activity had never been fired up.
-        * Cold loading would result in the SIS being null, which would then call for the
-        * MainFragment to be loaded. If the activity is destroyed but not cold loaded, the MainFragment
-        * will not randomly display.
-        */
+         * Cold loading would result in the SIS being null, which would then call for the
+         * MainFragment to be loaded. If the activity is destroyed but not cold loaded, the MainFragment
+         * will not randomly display.
+         */
         if (savedInstanceState == null) {
             Log.d(TAG, "onCreate: reloading the main fragment due to savedInstanceState being null");
-            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container,
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                     new MainFragment(), "main").commit();
         }
+        toggle.syncState();
 
 
 
@@ -95,39 +97,60 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.nav_home:
-                        if (getSupportFragmentManager().findFragmentByTag("main").isVisible()) {
-                            // DO NOTHING
-                        } else {
-                            getSupportFragmentManager().popBackStackImmediate();
+                        switch (fragmentSelected) {
+                            case 0: // Currently active fragment : Main
+                                // Do nothing. Already selected
+                                break;
+                            case 1: // Currently active fragment : Settings
+                                getSupportFragmentManager().popBackStackImmediate();
+                                break;
+                            case 2: // Currently active fragment : Favorites
+                                getSupportFragmentManager().popBackStackImmediate();
+                                break;
+                            default:
+                                break;
                         }
+                        fragmentSelected = 0;
                         searchItem.setVisible(true);
                         break;
                     case R.id.nav_settings:
-                        // Fragment has never been created. Create a brand new one
-                        if (getSupportFragmentManager().findFragmentByTag("main").isVisible()) {
-                            getSupportFragmentManager().beginTransaction()
-                                    .addToBackStack("mainStack").replace(R.id.fragment_container,
-                                    new SettingsFragment(), "settings").commit();
+                        switch (fragmentSelected) {
+                            case 0: // Currently active fragment : Main
+                                getSupportFragmentManager().beginTransaction()
+                                        .addToBackStack("main").replace(R.id.fragment_container,
+                                        new SettingsFragment(), "settings").commit();
+                                break;
+                            case 1: // Currently active fragment : Settings
+                                // Do nothing. Already selected.
+                                break;
+                            case 2: // Currently active fragment : Favorites
+                                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                                        new SettingsFragment(), "settings").commit();
+                                break;
+                            default:
+                                break;
                         }
+                        fragmentSelected = 1;
                         searchItem.setVisible(false);
                         break;
                     case R.id.nav_favorites:
-                        if (getSupportFragmentManager().findFragmentByTag("settings") != null) {
-                            getSupportFragmentManager().beginTransaction().hide(getSupportFragmentManager().findFragmentByTag("settings")).commit();
+                        switch (fragmentSelected) {
+                            case 0: // Currently active fragment : Main
+                                getSupportFragmentManager().beginTransaction()
+                                        .addToBackStack("main").replace(R.id.fragment_container,
+                                        new FavoritesFragment(), "favorites").commit();
+                                break;
+                            case 1: // Currently active fragment : Settings
+                                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                                        new FavoritesFragment(), "favorites").commit();
+                                break;
+                            case 2: // Currently active fragment : Favorites
+                                // Do nothing. Already selected
+                                break;
+                            default:
+                                break;
                         }
-                        if (getSupportFragmentManager().findFragmentByTag("main") != null) {
-                            Log.d(TAG, "onNavigationItemSelected: is now hidden");
-                            getSupportFragmentManager().beginTransaction().hide(getSupportFragmentManager().findFragmentByTag("main")).commit();
-                        }
-
-                        if (getSupportFragmentManager().findFragmentByTag("favorites") != null ) {
-                            getSupportFragmentManager().beginTransaction().show(getSupportFragmentManager().findFragmentByTag("favorites")).commit();
-
-                        } else {
-                            // Fragment has never been created. Create a brand new one
-                            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container,
-                                    new FavoritesFragment(), "favorites").commit();
-                        }
+                        fragmentSelected = 2;
                         searchItem.setVisible(false);
                         break;
                     default:
@@ -149,6 +172,20 @@ public class MainActivity extends AppCompatActivity {
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
+            switch (fragmentSelected) {
+                case 0: // Currently active fragment : Main
+                    //TODO: Main selected already. Create user promp
+                    break;
+                case 1: // Currently active fragment : Settings
+                    getSupportFragmentManager().beginTransaction().hide(getSupportFragmentManager().findFragmentByTag("settings")).commit();
+                    break;
+                case 2: // Currently active fragment : Favorites
+                    getSupportFragmentManager().beginTransaction().hide(getSupportFragmentManager().findFragmentByTag("favorites")).commit();
+                    break;
+                default:
+                    break;
+            }
+            fragmentSelected = 0;
             super.onBackPressed();
         }
     }
@@ -171,10 +208,4 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
-
-
-
-
-
 }

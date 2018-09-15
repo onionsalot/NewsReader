@@ -3,6 +3,7 @@ package org.example.trongnguyen.newsreader.fragments;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -18,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -63,7 +65,7 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
                     "%20thread.title%3ASpider";
     private static final String NEWS_BASE_URL1 =
             "http://webhose.io/filterWebContent" +
-                    "?token=da31bd42-351a-40ab-b014-ac6944b07a65" +
+                    "?token=fae3fadc-f18f-4ec4-a8d2-25fdc41bf0ab" +
                     "&format=json";
     private static final String NEWS_BASE_URL2 =
                     "&sort=published" +
@@ -77,11 +79,15 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
     private boolean endOfList = false;
     private boolean doNothing = false;
     private boolean dataFetched = false;
+    private boolean layoutSwitch = false;
     private SharedPreferences.OnSharedPreferenceChangeListener spChangedListener;
     TextView emptyView;
     ProgressBar progressBar;
     View rootView;
     ListView listView;
+    ImageView layoutSmall;
+    ImageView layoutMed;
+    ImageView layoutLarge;
     public MainFragment() { }
 
     @Override
@@ -111,10 +117,12 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
             }
         };
         sp.registerOnSharedPreferenceChangeListener(spChangedListener);
-
+        
         // OnCreate is not called again in the lifecycle is rotated so the adapter is initiated here.
-        mAdapter = new NewsAdapter(getActivity(), 0, new ArrayList<News>());  // Get a reference to the LoaderManager, in order to interact with loaders.
-        getLoaderManager().initLoader(0, null, this);
+        mAdapter = new NewsAdapter(getActivity(), 0, new ArrayList<News>(),0);
+        // Get a reference to the LoaderManager, in order to interact with loaders.
+        LoaderManager loaderManager = getLoaderManager();
+        loaderManager.initLoader(0, null, this);
         dataFetched = true;
         super.onCreate(savedInstanceState);
     }
@@ -169,6 +177,7 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
          */
         if (savedInstanceState != null) {
             // Orientation change most likely.
+
         } else {
             if (savedSession != null) {
                 // Returning from backstack most likely. Do nothing
@@ -212,14 +221,36 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
                             // If end of list has been reached and variable endOfList has been activated by addItems();
                             // The following code will run to add a footer showing that the end of the list has been reached.
                             // TODO: Make the footer not so ugly
-                            View footerView = ((LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.layout_footer, null, false);
-                            listView.addFooterView(footerView);
+                            Toast.makeText(getActivity(), "Your toast message.",
+                                    Toast.LENGTH_SHORT).show();
                             doNothing = true;
                         } else {
                             addItems();
                         }
                     }
                 }
+            }
+        });
+
+        layoutSmall = (ImageView) rootView.findViewById(R.id.change_small);
+        layoutSmall.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeLayout(1);
+            }
+        });
+        layoutMed = (ImageView) rootView.findViewById(R.id.change_medium);
+        layoutMed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeLayout(0);
+            }
+        });
+        layoutLarge = (ImageView) rootView.findViewById(R.id.change_large);
+        layoutMed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeLayout(2);
             }
         });
 
@@ -238,21 +269,21 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
      * per scroll and instead, activate a footer to show the user that the end of the list has been reached.
      *
      */
+    int currentViewCount = 10;
     private void addItems() {
-        int currentNum;
-        if (savedSession.size() > 10) {
-            currentNum = 10;
-        } else {
-            currentNum = savedSession.size();
-        }
 
 
-        for(int i = 0; i < currentNum; i++) {
-            mAdapter.insert(savedSession.get(0), mAdapter.getCount());
-            savedSession.remove(0);
-        }
-        if (savedSession.size() == 0) {
-            endOfList = true;
+
+        for(int i = 0; i < 10; i++) {
+
+            if (savedSession.size() == mAdapter.getCount()) {
+                endOfList = true;
+                break;
+            }
+            mAdapter.insert(savedSession.get(currentViewCount), mAdapter.getCount());
+            Log.d(TAG, "addItems: inserting : " + savedSession.get(currentViewCount) + " current count " + currentViewCount + " into " + (mAdapter.getCount()));
+            currentViewCount++;
+            //Log.d(TAG, "addItems: inserting : " + savedSession.get(currentViewCount) + " current count " + currentViewCount + " into " + (mAdapter.getCount()));
         }
     }
 
@@ -365,36 +396,37 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
          */
         // Checks how many results we have in data.size(). If the results are less than 10
         // then only print out that amount. Normally our default print is 10.
-        int results;
-        Log.d(TAG, "onLoadFinished: current data" + data.size());
-        if (data.size() < 10) {
-            results = data.size();
-        } else {
-            results = 10;
-        }
+        if (listView.getCount() == 0 || layoutSwitch) {
+            int results;
+            Log.d(TAG, "onLoadFinished: current data" + data.size());
+            if (data.size() < 10) {
+                results = data.size();
+            } else {
+                results = 10;
+            }
 
-        /*
-         *
-         * Once checks have been established, we make a for loop to get the data on the screen.
-         * We insert the information in index 0 of "data" one at a time into i+ index of mAdapter.
-         * Afterwards we remove the0th element of "data." this will shrink down the information in
-         * data thus should help with performance ever so slightly.
-         *
-          */
-        for (int i = 0; i < results; i++) {
-            mAdapter.insert(data.get(0), i);
-            data.remove(0);
-        }
-        // Save the data into savedSession to grab more elements later when end of scroll list is reached.
-        Log.d(TAG, "onLoadFinished: data after insertion" + data.size());
-        savedSession = data;
+            /*
+             *
+             * Once checks have been established, we make a for loop to get the data on the screen.
+             * We insert the information in index 0 of "data" one at a time into i+ index of mAdapter.
+             * Afterwards we remove the0th element of "data." this will shrink down the information in
+             * data thus should help with performance ever so slightly.
+             *
+             */
+            for (int i = 0; i < results; i++) {
+                mAdapter.insert(data.get(i), i);
+            }
+            // Save the data into savedSession to grab more elements later when end of scroll list is reached.
+            Log.d(TAG, "onLoadFinished: data after insertion" + data.size());
+            savedSession = data;
 
-        // Once information is loaded, make the progress bar invisible again.
-        progressBar.setVisibility(View.INVISIBLE);
-        // Once the Adapter has finished loading the data, he adapter will be destroyed to prevent
-        // any reloading of data. This is to fix the issue of the adapter adding onto the end
-        // of the data stream a new set of data each time the activity is destroyed.
-        getLoaderManager().destroyLoader(0);
+            // Once information is loaded, make the progress bar invisible again.
+            progressBar.setVisibility(View.INVISIBLE);
+            // Once the Adapter has finished loading the data, he adapter will be destroyed to prevent
+            // any reloading of data. This is to fix the issue of the adapter adding onto the end
+            // of the data stream a new set of data each time the activity is destroyed.
+            layoutSwitch = false;
+        }
     }
 
     @Override
@@ -405,23 +437,45 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
     }
 
     private void clearAdapter() {
-        mAdapter.clear();
-        savedSession.clear();
+        Log.d(TAG, "clearAdapter: called");
+        if (mAdapter != null) {mAdapter.clear();}
+        if (savedSession != null) {savedSession.clear();}
         listView.setAdapter(null);
         dataFetched= false;
         endOfList = false;
         doNothing = false;
-        progressBar.setVisibility(View.INVISIBLE);
-        emptyView.setVisibility(View.INVISIBLE);
+        currentViewCount = 10;
         getLoaderManager().destroyLoader(0);
+        progressBar.setVisibility(View.VISIBLE);
+        emptyView.setVisibility(View.INVISIBLE);
+        LoaderManager loaderManager = getLoaderManager();
+        loaderManager.initLoader(0, null, this);
     }
 
     private void createAdapter() {
-        mAdapter = new NewsAdapter(getActivity(), 0, new ArrayList<News>());  // Get a reference to the LoaderManager, in order to interact with loaders.
+        Log.d(TAG, "createAdapter: called");
+        currentViewCount = 10;
+        mAdapter = new NewsAdapter(getActivity(), 0, new ArrayList<News>(), 0);  // Get a reference to the LoaderManager, in order to interact with loaders.
         getLoaderManager().initLoader(0, null, this);
         dataFetched = true;
         progressBar.setVisibility(View.VISIBLE);
         listView.setAdapter(mAdapter);
     }
 
+    private void changeLayout(int layoutNum) {
+        layoutSwitch = true;
+        endOfList = false;
+        doNothing = false;
+        Log.d(TAG, "changeLayout: clicked");
+
+        Log.d(TAG, "changeLayout: newAdapter count " + mAdapter.getCount());
+
+        Log.d(TAG, "changeLayout: newAdapter count " + mAdapter.getCount());
+        currentViewCount = 10;
+
+        mAdapter = new NewsAdapter(getActivity(), 0, new ArrayList<News>(), layoutNum);
+        listView.setAdapter(mAdapter);
+        LoaderManager loaderManager = getLoaderManager();
+        loaderManager.initLoader(0, null, this);
+    }
 }

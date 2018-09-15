@@ -11,6 +11,7 @@ import static android.content.ContentValues.TAG;
 
 public class NewsLoader extends AsyncTaskLoader<List<News>> {
     String mUrl;
+    private List<News> items;
     // This is the constructor class.
     // @param context of the activity
     // @param url to load data from
@@ -27,14 +28,19 @@ public class NewsLoader extends AsyncTaskLoader<List<News>> {
         if (mUrl == null) {
             return null;
         }
-        List<News> items = QueryTools.fetchNewsData(mUrl);
+        items = QueryTools.fetchNewsData(mUrl);
         return (items);
     }
 
     @Override
     protected void onStartLoading() {
         Log.d(TAG, "onStartLoading: Start");
-        forceLoad();
+        Log.d(TAG, "onStartLoading: items " + items);
+        if (items == null) {
+            forceLoad();
+        } else {
+
+        }
     }
 
 
