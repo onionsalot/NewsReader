@@ -52,7 +52,7 @@ public class NewsAdapter extends ArrayAdapter<News>{
             } else if (mLayout == 1){
                 listItemView = LayoutInflater.from(getContext()).inflate(R.layout.news_items_small, parent, false);
             } else {
-                listItemView = LayoutInflater.from(getContext()).inflate(R.layout.news_items, parent, false);
+                listItemView = LayoutInflater.from(getContext()).inflate(R.layout.news_items_large, parent, false);
             }
             holder = new ViewHolder();
             holder.newsTitle = (TextView) listItemView.findViewById(R.id.article_title);

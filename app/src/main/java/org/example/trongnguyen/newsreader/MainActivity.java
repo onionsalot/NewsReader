@@ -1,6 +1,7 @@
 package org.example.trongnguyen.newsreader;
 
 import android.app.LoaderManager;
+import android.content.Intent;
 import android.content.Loader;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
@@ -178,9 +179,11 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case 1: // Currently active fragment : Settings
                     getSupportFragmentManager().beginTransaction().hide(getSupportFragmentManager().findFragmentByTag("settings")).commit();
+                    searchItem.setVisible(true);
                     break;
                 case 2: // Currently active fragment : Favorites
                     getSupportFragmentManager().beginTransaction().hide(getSupportFragmentManager().findFragmentByTag("favorites")).commit();
+                    searchItem.setVisible(true);
                     break;
                 default:
                     break;
@@ -202,7 +205,8 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             // Search is only available when on the Main Fragment. Will redirect us to the search class
             case R.id.action_menu_search:
-                // Do nothing for now
+                Intent intent = new Intent (getApplicationContext(), SearchActivity.class);
+                startActivity(intent);
                 return true;
 
         }

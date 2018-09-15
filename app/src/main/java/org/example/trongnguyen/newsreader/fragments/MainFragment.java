@@ -3,6 +3,7 @@ package org.example.trongnguyen.newsreader.fragments;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
@@ -81,6 +82,9 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
     private boolean dataFetched = false;
     private boolean layoutSwitch = false;
     private SharedPreferences.OnSharedPreferenceChangeListener spChangedListener;
+    private SharedPreferences sp;
+
+    int layoutValue;
     TextView emptyView;
     ProgressBar progressBar;
     View rootView;
@@ -108,18 +112,23 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
         // Retain the instance between configuration changes
         setRetainInstance(true);
 
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
         spChangedListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
             @Override
             public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-                Log.d(TAG, "onSharedPreferenceChanged: change detected");
-                clearAdapter();
+                Log.d(TAG, "onSharedPreferenceChanged: change detected + " + sharedPreferences + key);
+                if (key.equals("layout")) {
+
+                } else {
+                    clearAdapter();
+                }
             }
         };
         sp.registerOnSharedPreferenceChangeListener(spChangedListener);
-        
+        layoutValue = sp.getInt("layout", 0);
+
         // OnCreate is not called again in the lifecycle is rotated so the adapter is initiated here.
-        mAdapter = new NewsAdapter(getActivity(), 0, new ArrayList<News>(),0);
+        mAdapter = new NewsAdapter(getActivity(), 0, new ArrayList<News>(),layoutValue);
         // Get a reference to the LoaderManager, in order to interact with loaders.
         LoaderManager loaderManager = getLoaderManager();
         loaderManager.initLoader(0, null, this);
@@ -221,7 +230,7 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
                             // If end of list has been reached and variable endOfList has been activated by addItems();
                             // The following code will run to add a footer showing that the end of the list has been reached.
                             // TODO: Make the footer not so ugly
-                            Toast.makeText(getActivity(), "Your toast message.",
+                            Toast.makeText(getActivity(), "End of the list.",
                                     Toast.LENGTH_SHORT).show();
                             doNothing = true;
                         } else {
@@ -236,24 +245,30 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
         layoutSmall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                changeLayout(1);
+                if (layoutValue == 1) {
+                    // Do nothing, already on layout
+                } else { changeLayout(1);colorLayout(1);}
             }
         });
         layoutMed = (ImageView) rootView.findViewById(R.id.change_medium);
         layoutMed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                changeLayout(0);
+                if (layoutValue == 0) {
+                    // Do nothing, already on layout
+                } else { changeLayout(0); colorLayout(0);}
             }
         });
         layoutLarge = (ImageView) rootView.findViewById(R.id.change_large);
-        layoutMed.setOnClickListener(new View.OnClickListener() {
+        layoutLarge.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                changeLayout(2);
+                if (layoutValue == 2) {
+                    // Do nothing, already on layout
+                } else { changeLayout(2);colorLayout(2);}
             }
         });
-
+        colorLayout(layoutValue);
         return rootView;
     }
 
@@ -455,27 +470,52 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
     private void createAdapter() {
         Log.d(TAG, "createAdapter: called");
         currentViewCount = 10;
-        mAdapter = new NewsAdapter(getActivity(), 0, new ArrayList<News>(), 0);  // Get a reference to the LoaderManager, in order to interact with loaders.
+        mAdapter = new NewsAdapter(getActivity(), 0, new ArrayList<News>(), layoutValue);  // Get a reference to the LoaderManager, in order to interact with loaders.
         getLoaderManager().initLoader(0, null, this);
         dataFetched = true;
         progressBar.setVisibility(View.VISIBLE);
         listView.setAdapter(mAdapter);
     }
 
-    private void changeLayout(int layoutNum) {
+    private void changeLayout(int number) {
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putInt("layout", number);
+        editor.commit();
+        layoutValue = sp.getInt("layout", 0);
+
         layoutSwitch = true;
         endOfList = false;
         doNothing = false;
         Log.d(TAG, "changeLayout: clicked");
-
-        Log.d(TAG, "changeLayout: newAdapter count " + mAdapter.getCount());
-
-        Log.d(TAG, "changeLayout: newAdapter count " + mAdapter.getCount());
         currentViewCount = 10;
-
-        mAdapter = new NewsAdapter(getActivity(), 0, new ArrayList<News>(), layoutNum);
+        mAdapter = new NewsAdapter(getActivity(), 0, new ArrayList<News>(), number);
         listView.setAdapter(mAdapter);
         LoaderManager loaderManager = getLoaderManager();
         loaderManager.initLoader(0, null, this);
+
+
+        Log.d(TAG, "changeLayout: layoutValue" + layoutValue);
+    }
+
+    private void colorLayout(int number) {
+        switch (number) {
+            case 0: // Set color of the background for Med to indicate picked
+                layoutSmall.setBackgroundColor(Color.TRANSPARENT);
+                layoutMed.setBackgroundColor(Color.GRAY);
+                layoutLarge.setBackgroundColor(Color.TRANSPARENT);
+                break;
+            case 1:// Set color of the background for Small to indicate picked
+                layoutSmall.setBackgroundColor(Color.GRAY);
+                layoutMed.setBackgroundColor(Color.TRANSPARENT);
+                layoutLarge.setBackgroundColor(Color.TRANSPARENT);
+                break;
+            case 2:// Set color of the background for Large to indicate picked
+                layoutSmall.setBackgroundColor(Color.TRANSPARENT);
+                layoutMed.setBackgroundColor(Color.TRANSPARENT);
+                layoutLarge.setBackgroundColor(Color.GRAY);
+                break;
+            default:
+                break;
+        }
     }
 }

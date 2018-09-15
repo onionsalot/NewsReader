@@ -2,7 +2,6 @@
     <string name="app_name">News Reader</string>
 
 
-
     <!-- Navigation Drawer menu labels -->
     <string name="nav_home">Home</string>
     <string name="nav_photos">Photos</string>
