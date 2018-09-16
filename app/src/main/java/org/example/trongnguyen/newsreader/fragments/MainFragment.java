@@ -91,7 +91,7 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
          * will check if the loader at 0 is already initiated and if not, initiate again.
          *
          */
-        Log.d(TAG, "onCreate Initialized");
+        Log.d(TAG, "onCreate Initialized + " + savedInstanceState);
         // Retain the instance between configuration changes
         setRetainInstance(true);
 
@@ -407,53 +407,44 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
         /**
          *
          * Custom method used to create the URL using user preferences.
+         * At first checks the bundle state. If Main Activity is what is encompassing the MainFragment,
+         * there should be no bundle passed in. However when instanced by the SearchFragment, I use bundle
+         * to push the URL to this method which will override the formURL().
+         *
+         * If bundle state is null, then perform the new URL crafting method. This should be more efficient
+         * than the last method used to form the URL and with 80% less if statements!
          *
          */
-        // Initialize shared preferences and get the Set<String> of our multiple_choice_prefs.
-        // We will construct the news source section first.
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        Set<String> sources = sp.getStringSet("multiple_choice_prefs", null);
-        StringBuilder stringBuilder = new StringBuilder();
-        // StringBuilder will check if user has checked each of the sources, then append the source.
-        stringBuilder.append("(");
-        if (sources != null) {
-            if (sources.contains("arstechnica")) {
-                stringBuilder.append("site%3Aarstechnica.com%20OR%20");
-            }
-            if (sources.contains("wired")) {
-                stringBuilder.append("site%3Awired.com%20OR%20");
-            }
-            if (sources.contains("reuters")) {
-                stringBuilder.append("site%3Areuters.com%20OR%20");
-            }
-            if (sources.contains("cnbc")) {
-                stringBuilder.append("site%3Acnbc.com%20OR%20");
-            }
-            if (sources.contains("washington_post")) {
-                stringBuilder.append("site%3Awashingtonpost.com%20OR%20");
-            }
-            if (sources.contains("wallstreet_journal")) {
-                stringBuilder.append("site%3Awsj.com%20OR%20");
-            }
-            if (sources.contains("daily_caller")) {
-                stringBuilder.append("site%3Adailycaller.com%20OR%20");
-            }
-            if (sources.contains("polygon")) {
-                stringBuilder.append("site%3Apolygon.com%20OR%20");
-            }
-            if (sources.contains("siliconera")) {
-                stringBuilder.append("site%3Asiliconera.com%20OR%20");
-            }
-            if (sources.contains("gamespot")) {
-                stringBuilder.append("site%3Agamespot.com%20OR%20");
-            }
-            if (sources.contains("anime_news_network")) {
-                stringBuilder.append("site%3Aanimenewsnetwork.com%20OR%20");
-            }
-            if (sources.contains("crunchyroll")) {
-                stringBuilder.append("site%3Acrunchyroll.com%20OR%20");
-            }
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            String searchURL = bundle.getString("URL", "");
+            Log.d(TAG, "formURL: --------------------------------------\n" + "formURL: Called from SearchFragment\n" + "formURL: --------------------------------------");
+
+            return searchURL;
         }
+
+        /*
+        *
+        * Set<String> sources is set to the values that are checked in "multiple_choice_prefs."
+        * While they are viewable by printing source.toString(); we are unable to take out individual
+        * elements and append that element into the URL like a String Array would be able to.
+        *
+        * So I turned the sources into a String Array sourceArray. With the Array, we can now grab
+        * each individual element of the array and append them into the URL.
+        *
+         */
+        Set<String> sources = sp.getStringSet("multiple_choice_prefs", null);
+        String[] sourcesArray = sources.toArray(new String[sources.size()]);
+
+        // Initiate the StringBuilder and append the starting ( to start the sources section.
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("(");
+        // Appends the i element of sourceArray into the string and replace some text to comply with webhose.io.
+        for (int i = 0; i < sources.size(); i++) {
+            stringBuilder.append("site%3A").append(sourcesArray[i].replace("_","")).append(".com%20OR%20");
+        }
+        // Subtract 5 from the end of the builder as each item comes with .com%20OR%20. The last element
+        // will not need that last bit so subtract it from the string.
         stringBuilder.replace(stringBuilder.length()-5,stringBuilder.length(),"");
         stringBuilder.append(")");
 
@@ -464,7 +455,12 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
         if (!(topicString.equals(""))) {
             stringBuilder.append("%20thread.title%3A").append(sp.getString("topic_text", ""));
         }
-        return stringBuilder.toString();
+
+        // Shorten wallstreetjournal to form the website properly.
+        String searchURL = stringBuilder.toString();
+        searchURL = searchURL.replace("wallstreetjournal","wsj");
+
+        return searchURL;
     }
 
 

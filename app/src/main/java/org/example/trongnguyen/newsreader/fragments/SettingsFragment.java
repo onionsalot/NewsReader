@@ -38,7 +38,7 @@ public class SettingsFragment extends Fragment {
 
 
 
-    public static class EarthquakePreferenceFragment extends PreferenceFragment {
+    public static class NewsPreferenceFragment extends PreferenceFragment {
         MultiSelectListPreference source;
         String themeChooserText;
 
