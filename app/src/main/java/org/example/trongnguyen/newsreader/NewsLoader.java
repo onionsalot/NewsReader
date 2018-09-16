@@ -34,8 +34,8 @@ public class NewsLoader extends AsyncTaskLoader<List<News>> {
 
     @Override
     protected void onStartLoading() {
-        Log.d(TAG, "onStartLoading: Start");
-        Log.d(TAG, "onStartLoading: items " + items);
+        // onStartLoading was getting called upon each orientation change even if data was pulled.
+        // Checks if data is null before forceLoad(). If data is not null, then it is an orientation change.
         if (items == null) {
             forceLoad();
         } else {
