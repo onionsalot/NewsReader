@@ -306,6 +306,22 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
     }
 
     @Override
+    public void onDestroy() {
+        /**
+         *
+         * onDestroy() is overriden here to unregister the sharedPreferenceChangeListener.
+         * This is related to the NPE I was getting. Since both the main activity and the
+         * search activity use the mainFragment code as a base for displaying data to the list,
+         * the change listener was being called for both places and if called for the search fragment,
+         * an NPE would occur.
+         *
+         */
+        super.onDestroy();
+        Log.d(TAG, "onDestroy: destroyed");
+        sp.unregisterOnSharedPreferenceChangeListener(spChangedListener);
+    }
+
+    @Override
     public Loader<List<News>> onCreateLoader(int id, Bundle args) {
         /**
          *

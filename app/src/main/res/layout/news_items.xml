@@ -24,30 +24,34 @@
     <TextView
         android:id="@+id/article_title"
         android:layout_width="0dp"
-        android:layout_height="52dp"
-        android:layout_marginBottom="8dp"
+        android:layout_height="40dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="TextView"
+        android:maxLines="2"
         app:layout_constraintBottom_toTopOf="@+id/article_author"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/article_image"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
+    <android.support.v7.widget.AppCompatTextView
         android:id="@+id/article_author"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="20dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="9dp"
         android:text="TextView"
+        android:maxLines="1"
         app:layout_constraintBottom_toTopOf="@+id/article_desc"
         app:layout_constraintEnd_toStartOf="@+id/heart_image"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/article_image"
-        app:layout_constraintTop_toBottomOf="@+id/article_title" />
+        app:layout_constraintTop_toBottomOf="@+id/article_title"
+        app:autoSizeMaxTextSize="14sp"
+        app:autoSizeMinTextSize="8sp"
+        app:autoSizeStepGranularity="2sp"
+        app:autoSizeTextType="uniform"/>
 
     <TextView
         android:id="@+id/article_desc"
@@ -57,8 +61,9 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:maxLines="3"
+        android:maxLines="5"
         android:text="TextView"
+        android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/article_image"

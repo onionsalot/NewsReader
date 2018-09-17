@@ -68,7 +68,6 @@ public class SearchFragment extends Fragment {
         // The user is free to uncheck or check more items if they so wish. The preferences will NOT change.
         // This is meant to be it's own entity and should not be mixed with the user preferences.
         for (int i = 0; i < 12; i++ ) {
-            Log.d(TAG, "onCreateView: contains " + sources.contains(items[i].replace(" ", "_").toLowerCase()));
             if (sources.contains(items[i].replace(" ", "_").toLowerCase())) {listView.setItemChecked(i, true);}
         }
         return rootView;
@@ -107,7 +106,7 @@ public class SearchFragment extends Fragment {
         bundle.putString("URL", searchURL);
 
         secondFragment.setArguments(bundle);
-        transaction.replace(R.id.fragment_container, secondFragment);
+        transaction.replace(R.id.fragment_container, secondFragment, "searchResults");
         transaction.addToBackStack("searchStack");
         transaction.commit();
     }

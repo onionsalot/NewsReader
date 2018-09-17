@@ -1,9 +1,11 @@
 package org.example.trongnguyen.newsreader;
 
-import android.support.design.widget.NavigationView;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
+
+
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
@@ -12,7 +14,8 @@ import org.example.trongnguyen.newsreader.fragments.MainFragment;
 import org.example.trongnguyen.newsreader.fragments.SearchFragment;
 
 public class SearchActivity extends AppCompatActivity {
-
+    FragmentTransaction transaction;
+    Fragment searchFragment;
     private static final String TAG = "//------Search Activity";
 
     @Override
@@ -25,10 +28,14 @@ public class SearchActivity extends AppCompatActivity {
         toolbar.setTitle("Custom Search");
 
 
+        searchFragment = new SearchFragment();
+        transaction = getSupportFragmentManager().beginTransaction();
+
+
         if (savedInstanceState == null) {
             Log.d(TAG, "onCreate: reloading the main fragment due to savedInstanceState being null");
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                    new SearchFragment(), "search").commit();
+            transaction.replace(R.id.fragment_container, searchFragment, "search");
+            transaction.commit();
         }
     }
 }
