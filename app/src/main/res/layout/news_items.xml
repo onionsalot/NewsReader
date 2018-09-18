@@ -39,19 +39,19 @@
         android:id="@+id/article_author"
         android:layout_width="0dp"
         android:layout_height="20dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="32dp"
         android:layout_marginStart="16dp"
-        android:text="TextView"
+        android:layout_marginTop="8dp"
         android:maxLines="1"
-        app:layout_constraintBottom_toTopOf="@+id/article_desc"
-        app:layout_constraintEnd_toStartOf="@+id/heart_image"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/article_image"
-        app:layout_constraintTop_toBottomOf="@+id/article_title"
+        android:text="TextView"
         app:autoSizeMaxTextSize="14sp"
         app:autoSizeMinTextSize="8sp"
         app:autoSizeStepGranularity="2sp"
-        app:autoSizeTextType="uniform"/>
+        app:autoSizeTextType="uniform"
+        app:layout_constraintBottom_toTopOf="@+id/article_desc"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/article_image"
+        app:layout_constraintTop_toBottomOf="@+id/article_title" />
 
     <TextView
         android:id="@+id/article_desc"
@@ -69,16 +69,16 @@
         app:layout_constraintStart_toEndOf="@+id/article_image"
         app:layout_constraintTop_toBottomOf="@+id/article_author" />
 
-    <ImageView
+    <com.like.LikeButton
         android:id="@+id/heart_image"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/article_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="8dp"
+        app:icon_size="18dp"
+        app:icon_type="heart"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/article_author"
-        app:layout_constraintTop_toBottomOf="@+id/article_title"
-        app:srcCompat="@drawable/ic_fav_no" />
+        app:layout_constraintTop_toBottomOf="@+id/article_title" />
 
 </android.support.constraint.ConstraintLayout>

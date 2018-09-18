@@ -135,24 +135,8 @@ public class MainActivity extends AppCompatActivity {
                         searchItem.setVisible(false);
                         break;
                     case R.id.nav_favorites:
-                        switch (fragmentSelected) {
-                            case 0: // Currently active fragment : Main
-                                getSupportFragmentManager().beginTransaction()
-                                        .addToBackStack("main").replace(R.id.fragment_container,
-                                        new FavoritesFragment(), "favorites").commit();
-                                break;
-                            case 1: // Currently active fragment : Settings
-                                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                                        new FavoritesFragment(), "favorites").commit();
-                                break;
-                            case 2: // Currently active fragment : Favorites
-                                // Do nothing. Already selected
-                                break;
-                            default:
-                                break;
-                        }
-                        fragmentSelected = 2;
-                        searchItem.setVisible(false);
+                        Intent intent = new Intent (getApplicationContext(), FavoritesActivity.class);
+                        startActivity(intent);
                         break;
                     default:
                         break;

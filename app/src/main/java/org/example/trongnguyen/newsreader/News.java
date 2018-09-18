@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 public class News implements Serializable{
     // Class implements Serializable so that it may be passed in as an object for Intent
+    String mUuid;
     String mTitle;
     String mAuthor;
     String mDate;
@@ -13,7 +14,8 @@ public class News implements Serializable{
     String mUrl;
     String mTags;
 
-    public News(String title, String author, String date, String source, String description, String picture, String url, String tags) {
+    public News(String uuid, String title, String author, String date, String source, String description, String picture, String url, String tags) {
+        mUuid = uuid;
         mTitle = title;
         mAuthor = author;
         mDate = date;
@@ -24,7 +26,9 @@ public class News implements Serializable{
         mTags = tags;
     }
 
-
+    public String getUuid() {
+        return mUuid;
+    }
     public String getTitle() {
         return mTitle;
     }

@@ -150,6 +150,7 @@ public final class QueryTools {
                         // Extract out the title values
                         // Created a new JSONObject named firstItem so we can pull info from within the baseJsonResponse Array
                         // The following are the fields that we are going to grab
+                        String uuid;
                         String title;
                         String author;
                         String published; // Date field
@@ -158,6 +159,17 @@ public final class QueryTools {
                         String main_image;
                         String url;
                         String tags;
+                        /*
+                         * Checks if there is a "title" field in the JSON array..
+                         * 'Has' method is check if a field is there. If it is not then create a
+                         * text generic response.
+                         */
+                        if (itemThreads.has("uuid")) {
+                            uuid = itemThreads.getString("uuid");
+                        } else {
+                            uuid = "";
+                        }
+
                         /*
                          * Checks if there is a "title" field in the JSON array..
                          * 'Has' method is check if a field is there. If it is not then create a
@@ -274,7 +286,7 @@ public final class QueryTools {
                             tags = "";
                         }
                         // Add the info obtained into the baseObject.
-                        baseArray.add(new News(title, author, published, site, text, main_image, url, tags));
+                        baseArray.add(new News(uuid, title, author, published, site, text, main_image, url, tags));
                         }
                             // Create the object and return it
                             return baseArray;
