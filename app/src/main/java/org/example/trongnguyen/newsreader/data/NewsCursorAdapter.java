@@ -9,7 +9,10 @@ import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.like.LikeButton;
+import com.like.OnLikeListener;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -19,14 +22,15 @@ import org.example.trongnguyen.newsreader.R;
 import static android.content.ContentValues.TAG;
 
 public class NewsCursorAdapter extends CursorAdapter{
+    Context mContext;
     public NewsCursorAdapter(Context context, Cursor c) {
         super(context, c);
     }
 
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
+        mContext = context;
         return LayoutInflater.from(context).inflate(R.layout.news_items, parent, false);
-
     }
 
     @Override
@@ -36,7 +40,9 @@ public class NewsCursorAdapter extends CursorAdapter{
         TextView newsAuthor = (TextView) view.findViewById(R.id.article_author);
         TextView newsDescription = (TextView) view.findViewById(R.id.article_desc);
         ImageView listItemPicture = (ImageView) view.findViewById(R.id.article_image);
+        LikeButton likeButton = (LikeButton) view.findViewById(R.id.heart_image);
         // Move the cursor to the columns that we want
+        int uidColumnIndex = cursor.getColumnIndex(NewsContract.NewsEntry.COLUMN_NEWS_UID);
         int nameColumnIndex = cursor.getColumnIndex(NewsContract.NewsEntry.COLUMN_NEWS_NAME);
         int authorColumnIndex = cursor.getColumnIndex(NewsContract.NewsEntry.COLUMN_NEWS_AUTHOR);
         int sourceColumnIndex = cursor.getColumnIndex(NewsContract.NewsEntry.COLUMN_NEWS_SOURCE);
@@ -47,6 +53,7 @@ public class NewsCursorAdapter extends CursorAdapter{
         int linkColumnIndex = cursor.getColumnIndex(NewsContract.NewsEntry.COLUMN_NEWS_LINK);
 
         // Read the attributes for the news item at location ColumnIndex
+        final String newsUidInfo = cursor.getString(uidColumnIndex);
         String newsTitleInfo = cursor.getString(nameColumnIndex);
         String newsAuthorInfo = cursor.getString(authorColumnIndex);
         String newsDateInfo = cursor.getString(dateColumnIndex);
@@ -81,6 +88,28 @@ public class NewsCursorAdapter extends CursorAdapter{
                         }
                     });
         }
+
+        likeButton.setLiked(true);
+        likeButton.setOnLikeListener(new OnLikeListener() {
+            @Override
+            public void liked(LikeButton likeButton) {
+                // Do nothing. Should be liked by default.
+            }
+
+            @Override
+            public void unLiked(LikeButton likeButton) {
+                deleteLiked(newsUidInfo);
+            }
+        });
+    }
+
+    private void deleteLiked(String uid) {
+        Cursor cursor = getCursor();
+        String uuid = uid;
+        String selection = NewsContract.NewsEntry.COLUMN_NEWS_UID + " = ?";
+        int rowsDeleted = mContext.getContentResolver().delete(NewsContract.NewsEntry.CONTENT_URI,selection,new String[]{uuid});
+        Toast.makeText(mContext, rowsDeleted + " row deleted successfully!",
+                Toast.LENGTH_SHORT).show();
     }
 
 }

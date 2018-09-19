@@ -94,37 +94,17 @@ public class FavoritesFragment extends Fragment implements LoaderManager.LoaderC
         ListView newsListView = (ListView) rootView.findViewById(R.id.favorites_list_view);
 
         // Create adapter to form each list item for each row. Pass in cursor to get the data
-        NewsCursorAdapter adapter = new NewsCursorAdapter(getContext(), cursor);
+        mNewsCursorAdapter = new NewsCursorAdapter(getContext(), cursor);
 
         // set the adapter on the casted view
-        newsListView.setAdapter(adapter);
+        newsListView.setAdapter(mNewsCursorAdapter);
     }
 
     private void testButton() {
-        String [] projection = {
-                NewsContract.NewsEntry.COLUMN_NEWS_UID
-        };
 
-        Cursor cursor = getContext().getContentResolver().query(
-                NewsContract.NewsEntry.CONTENT_URI,
-                projection,
-                null,
-                null,
-                null,
-                null
-        );
-        ArrayList<String> uids = new ArrayList<String>();
-        try {
-            cursor.moveToFirst();
-            while(!(cursor.isAfterLast())){
-                uids.add(cursor.getString(cursor.getColumnIndex("uid")));
-                cursor.moveToNext();
-            }
-        } finally {
-            cursor.close();
-        }
 
-        Log.d(TAG, "compareFavorites: " + uids.get(1));
+
+
     }
     private void testButton2() {
         getActivity().getContentResolver().delete(NewsContract.NewsEntry.CONTENT_URI, null, null);
