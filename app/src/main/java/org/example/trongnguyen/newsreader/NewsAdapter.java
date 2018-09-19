@@ -34,8 +34,10 @@ public class NewsAdapter extends ArrayAdapter<News>{
     ViewHolder holder;
     Context mContext;
     int mLayout;
+    ArrayList<String> mUids;
     public NewsAdapter(@NonNull Context context, int resource, @NonNull List<News> objects, int layout) {
         super(context, resource, objects);
+        mUids = compareFavorites();
         mContext = context;
         mLayout = layout;
     }
@@ -127,7 +129,11 @@ public class NewsAdapter extends ArrayAdapter<News>{
                     });
         }
 
-        holder.heartPicture.setLiked(compareFavorites(w));
+        if (mUids.contains(w.getUuid())) {
+            holder.heartPicture.setLiked(true);
+        } else {
+            holder.heartPicture.setLiked(false);
+        }
         holder.heartPicture.setOnLikeListener(new OnLikeListener() {
             @Override
             public void liked(LikeButton likeButton) {
@@ -167,6 +173,7 @@ public class NewsAdapter extends ArrayAdapter<News>{
         Uri newUri = getContext().getContentResolver().insert(NewsContract.NewsEntry.CONTENT_URI,values);
         Toast.makeText(getContext(), "Favorites has been added!",
                 Toast.LENGTH_SHORT).show();
+        mUids = compareFavorites();
     }
 
     private void deleteFavorites(News position) {
@@ -175,9 +182,10 @@ public class NewsAdapter extends ArrayAdapter<News>{
         int rowsDeleted = getContext().getContentResolver().delete(NewsContract.NewsEntry.CONTENT_URI,selection,new String[]{uuid});
         Toast.makeText(getContext(), rowsDeleted + " row deleted successfully!",
                 Toast.LENGTH_SHORT).show();
+        mUids = compareFavorites();
     }
 
-    private boolean compareFavorites( News position) {
+    private ArrayList<String> compareFavorites() {
         String [] projection = {
                 NewsContract.NewsEntry.COLUMN_NEWS_UID
         };
@@ -201,11 +209,12 @@ public class NewsAdapter extends ArrayAdapter<News>{
             cursor.close();
         }
 
-        if (uids.contains(position.getUuid())) {
-            Log.d(TAG, "compareFavorites: We got a match!!!!! " + position.getTitle());
-            return true;
-        } else {
-            return false;
-        }
+        return uids;
+    }
+
+    @Override
+    public void notifyDataSetChanged() {
+        mUids = compareFavorites();
+        super.notifyDataSetChanged();
     }
 }

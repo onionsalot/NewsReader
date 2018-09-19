@@ -297,6 +297,7 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
         if (!dataFetched) {
             progressBar.setVisibility(View.VISIBLE);
         }
+        mAdapter.notifyDataSetChanged();
     }
 
     @Override
