@@ -13,6 +13,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +22,9 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import org.example.trongnguyen.newsreader.DetailsActivity;
+import org.example.trongnguyen.newsreader.News;
 import org.example.trongnguyen.newsreader.R;
 import org.example.trongnguyen.newsreader.data.NewsContract;
 import org.example.trongnguyen.newsreader.data.NewsCursorAdapter;
@@ -34,8 +38,8 @@ import static android.content.ContentValues.TAG;
 public class FavoritesFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>{
     private NewsDbHelper mDbHelper;
     View rootView;
-    TextView textView;
     NewsCursorAdapter mNewsCursorAdapter;
+    String sortBy;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,27 +50,58 @@ public class FavoritesFragment extends Fragment implements LoaderManager.LoaderC
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_favorites, container, false);
-        Button button = (Button) rootView.findViewById(R.id.test_button);
-        button.setOnClickListener(new View.OnClickListener() {
+        Button byTitle = (Button) rootView.findViewById(R.id.sort_name);
+        Button byDate = (Button) rootView.findViewById(R.id.sort_date);
+        byTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                testButton();
+                displayDatabaseInfo(1);
             }
         });
-        Button button2 = (Button) rootView.findViewById(R.id.test_button2);
-        button2.setOnClickListener(new View.OnClickListener() {
+        byDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                testButton2();
+                displayDatabaseInfo(2);
             }
         });
 
-        displayDatabaseInfo();
+
+        displayDatabaseInfo(0);
 
         return rootView;
     }
 
-    private void displayDatabaseInfo() {
+    private void displayDatabaseInfo(int sort) {
+
+        switch (sort) {
+            case 0:
+                sortBy = null;
+                break;
+            case 1:
+                if (TextUtils.isEmpty(sortBy)) {
+                    sortBy = NewsContract.NewsEntry.COLUMN_NEWS_NAME + " ASC";
+                } else {
+                    if (sortBy.equals(NewsContract.NewsEntry.COLUMN_NEWS_NAME + " ASC")) {
+                        sortBy = NewsContract.NewsEntry.COLUMN_NEWS_NAME + " DESC";
+                    } else {
+                        sortBy = NewsContract.NewsEntry.COLUMN_NEWS_NAME + " ASC";
+                    }
+                }
+                break;
+            case 2:
+                if (TextUtils.isEmpty(sortBy)) {
+                    sortBy = NewsContract.NewsEntry._ID + " ASC";
+                } else {
+                    if (sortBy.equals(NewsContract.NewsEntry._ID + " ASC")) {
+                        sortBy = NewsContract.NewsEntry._ID + " DESC";
+                    } else {
+                        sortBy = NewsContract.NewsEntry._ID + " ASC";
+                    }
+                }
+                break;
+            default:
+                break;
+        }
         String [] projection = {
                 BaseColumns._ID,
                 NewsContract.NewsEntry.COLUMN_NEWS_UID,
@@ -80,12 +115,12 @@ public class FavoritesFragment extends Fragment implements LoaderManager.LoaderC
                 NewsContract.NewsEntry.COLUMN_NEWS_PICTURE
         };
 
-        Cursor cursor = getActivity().getContentResolver().query(
+        final Cursor cursor = getActivity().getContentResolver().query(
                 NewsContract.NewsEntry.CONTENT_URI,
                 projection,
                 null,
                 null,
-                null,
+                sortBy,
                 null
         );
 
@@ -98,16 +133,19 @@ public class FavoritesFragment extends Fragment implements LoaderManager.LoaderC
 
         // set the adapter on the casted view
         newsListView.setAdapter(mNewsCursorAdapter);
-    }
 
-    private void testButton() {
+        newsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-
-
-
-    }
-    private void testButton2() {
-        getActivity().getContentResolver().delete(NewsContract.NewsEntry.CONTENT_URI, null, null);
+                Cursor cursor1 = mNewsCursorAdapter.getCursor();
+                int linkColumnIndex = cursor1.getColumnIndex(NewsContract.NewsEntry.COLUMN_NEWS_LINK);
+                String url = cursor1.getString(linkColumnIndex);
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse(url));
+                startActivity(intent);
+            }
+        });
     }
 
     @NonNull
@@ -131,7 +169,7 @@ public class FavoritesFragment extends Fragment implements LoaderManager.LoaderC
                 projection,
                 null,
                 null,
-                null
+                sortBy
         );
     }
 
