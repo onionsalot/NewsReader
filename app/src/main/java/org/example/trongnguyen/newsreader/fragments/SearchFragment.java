@@ -11,10 +11,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import org.example.trongnguyen.newsreader.R;
 
@@ -63,6 +65,18 @@ public class SearchFragment extends Fragment {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), R.layout.fragment_search_item,R.id.checked_text, items);
         listView.setAdapter(adapter);
 
+        // Listener to check if the checked or unchecked item is the last one.
+        // This will be to prevent the user from being able to uncheck all items.
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (listView.getCheckedItemCount() == 0) {
+                    listView.setItemChecked(position,true);
+                    Toast.makeText(getContext(),  "Failed! Please have at least one item checked!",
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
         // Loop to check if "sources" contains any items within the "items" string and check it if it does.
         // This is how I determine which fields to auto check as these are the ones defined by the user preferences.
         // The user is free to uncheck or check more items if they so wish. The preferences will NOT change.

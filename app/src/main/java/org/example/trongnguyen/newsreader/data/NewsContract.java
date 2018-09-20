@@ -4,6 +4,10 @@ import android.net.Uri;
 import android.provider.BaseColumns;
 
 public final class NewsContract {
+    /**
+     * Contract class used to obtain static information about our table such as the table names
+     * titles description and other things. Also provides the pre-concatnated version of the URI.
+     */
     public static final String CONTENT_AUTHORITY = "org.example.trongnguyen.newsreader";
     public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
     public static final String PATH_NEWS = "news";

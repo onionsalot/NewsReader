@@ -1,7 +1,9 @@
 package org.example.trongnguyen.newsreader.data;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.database.Cursor;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,10 +20,21 @@ import com.squareup.picasso.Picasso;
 
 import org.example.trongnguyen.newsreader.NewsAdapter;
 import org.example.trongnguyen.newsreader.R;
+import org.example.trongnguyen.newsreader.fragments.FavoritesFragment;
 
 import static android.content.ContentValues.TAG;
 
 public class NewsCursorAdapter extends CursorAdapter{
+    /**
+     * Similar method to the NewsAdapter except this is used for Cursors. Used to bind the views to certain
+     * views on the screen after inflation.
+     *
+     * We get the cursor's columnIndex and place it into the item's columnIndex int variable, then we
+     * use that index to pass into the getString method of the cursor and attach it to a variable for
+     * reference. This will be the information that is gathered about each field.
+     *
+     * Also contains the logic for how the like button works and when it can be checked and unchecked.
+     */
     Context mContext;
     public NewsCursorAdapter(Context context, Cursor c) {
         super(context, c);
@@ -89,6 +102,9 @@ public class NewsCursorAdapter extends CursorAdapter{
                     });
         }
 
+        // Logic for the like button. Because this will be from the favorites page, the button should
+        // ALWAYS be checked. To uncheck it means to remove the specific item. Therefore the like button
+        // should always be checked.
         likeButton.setLiked(true);
         likeButton.setOnLikeListener(new OnLikeListener() {
             @Override
@@ -98,18 +114,47 @@ public class NewsCursorAdapter extends CursorAdapter{
 
             @Override
             public void unLiked(LikeButton likeButton) {
+                likeButton.setLiked(true);
                 deleteLiked(newsUidInfo);
             }
         });
     }
 
-    private void deleteLiked(String uid) {
-        Cursor cursor = getCursor();
-        String uuid = uid;
-        String selection = NewsContract.NewsEntry.COLUMN_NEWS_UID + " = ?";
-        int rowsDeleted = mContext.getContentResolver().delete(NewsContract.NewsEntry.CONTENT_URI,selection,new String[]{uuid});
-        Toast.makeText(mContext, rowsDeleted + " row deleted successfully!",
-                Toast.LENGTH_SHORT).show();
+    private void deleteLiked(final String uid) {
+        /**
+         * Logic behind the delete function. This is to select a single item from the list. Will
+         * prompt the user after the item has been clicked to see if they wish for it to be removed.
+         */
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(mContext);
+        builder1.setMessage("Are you sure you want to permanently remove this item?");
+        builder1.setCancelable(true);
+
+
+        builder1.setPositiveButton(
+                "Yes",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                        Cursor cursor = getCursor();
+                        String uuid = uid;
+                        String selection = NewsContract.NewsEntry.COLUMN_NEWS_UID + " = ?";
+                        int rowsDeleted = mContext.getContentResolver().delete(NewsContract.NewsEntry.CONTENT_URI,selection,new String[]{uuid});
+                        Toast.makeText(mContext, rowsDeleted + " row deleted successfully!",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+        builder1.setNegativeButton(
+                "No",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+
+        AlertDialog alert11 = builder1.create();
+        alert11.show();
+
     }
 
 }

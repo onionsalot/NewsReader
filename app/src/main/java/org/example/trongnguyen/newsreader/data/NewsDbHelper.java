@@ -7,6 +7,10 @@ import android.database.sqlite.SQLiteOpenHelper;
 import org.example.trongnguyen.newsreader.data.NewsContract.NewsEntry;
 
 public class NewsDbHelper extends SQLiteOpenHelper{
+    /**
+     * NewsDBHelper, used to create the table along with populating its fields.
+     * Used to specify defaults and other specs for each individual table.
+     */
     public static final String DATABASE_NAME = "newsapp.db";
     public static final int DATABASE_VERSION = 1;
 
