@@ -15,6 +15,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -576,21 +577,24 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
          * sets the other layouts as transparent while setting the active one as GRAY.
          *
          */
+        // Used to get the attribute state and get the color to adhere with the current theme
+        TypedValue typedValue = new TypedValue();
+        getContext().getTheme().resolveAttribute(R.attr.customLayoutHighlightColor, typedValue, true);
         switch (number) {
             case 0: // Set color of the background for Med to indicate picked
                 layoutSmall.setBackgroundColor(Color.TRANSPARENT);
-                layoutMed.setBackgroundColor(Color.GRAY);
+                layoutMed.setBackgroundColor(typedValue.data);
                 layoutLarge.setBackgroundColor(Color.TRANSPARENT);
                 break;
             case 1:// Set color of the background for Small to indicate picked
-                layoutSmall.setBackgroundColor(Color.GRAY);
+                layoutSmall.setBackgroundColor(typedValue.data);
                 layoutMed.setBackgroundColor(Color.TRANSPARENT);
                 layoutLarge.setBackgroundColor(Color.TRANSPARENT);
                 break;
             case 2:// Set color of the background for Large to indicate picked
                 layoutSmall.setBackgroundColor(Color.TRANSPARENT);
                 layoutMed.setBackgroundColor(Color.TRANSPARENT);
-                layoutLarge.setBackgroundColor(Color.GRAY);
+                layoutLarge.setBackgroundColor(typedValue.data);
                 break;
             default:
                 break;

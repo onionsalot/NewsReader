@@ -12,6 +12,7 @@
         android:id="@+id/results_text"
         android:layout_width="0dp"
         android:layout_height="40dp"
+        android:background="?attr/customNotificationColor"
         android:gravity="left|fill_vertical"
         android:paddingBottom="8dp"
         android:paddingLeft="8dp"

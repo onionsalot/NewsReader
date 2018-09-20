@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="customTextColor" format="reference"/>
+    <attr name="customToolbarColor" format="reference"/>
+    <attr name="customNotificationColor" format="reference" />
+    <attr name="customInfoBarColor" format="reference" />
+    <attr name="customBackgroundColor" format="reference" />
+    <attr name="customBackgroundColorDark" format="reference" />
+    <attr name="customButtonColor" format="reference" />
+    <attr name="customLayoutHighlightColor" format="reference"/>
+    <attr name="primaryButtonTheme" format="reference" />
+</resources>

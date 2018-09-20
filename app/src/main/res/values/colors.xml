@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+
+    <color name="eggplantColorText">#FFFFFF</color><!-- Main Toolbar Color -->
+    <color name="eggplantColorToolbar">#741c7a</color><!-- Main Toolbar Color -->
+    <color name="eggplantColorNotification">#601765</color><!-- Notification Color -->
+    <color name="eggplantColorInfoBar">#601765</color><!-- Main Button Color -->
+    <color name="eggplantColorBackground">#303030</color><!-- Main Background Color -->
+    <color name="eggplantColorBackgroundDark">#202020</color><!-- Main Background Color -->
+    <color name="eggplantColorButton">#601765</color><!-- Main Background Color -->
+    <color name="eggplantColorHighlight">#804584</color><!-- Main Background Color -->
+
+
 </resources>

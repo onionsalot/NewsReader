@@ -2,10 +2,30 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="primaryButtonTheme">
+            @style/Widget.AppCompat.Button.Colored
+        </item>
+        <item name="colorPrimary">@color/eggplantColorBackground</item>
+        <item name="colorPrimaryDark">@color/eggplantColorNotification</item>
+        <item name="colorButtonNormal">@color/eggplantColorHighlight</item>
+        <item name="colorAccent">@color/eggplantColorHighlight</item>
+        <item name="android:textColor">@color/eggplantColorText</item>
+        <item name="customTextColor">@color/eggplantColorText</item>
+        <item name="customToolbarColor">@color/eggplantColorToolbar</item>
+        <item name="customNotificationColor">@color/eggplantColorNotification</item>
+        <item name="customInfoBarColor">@color/eggplantColorInfoBar</item>
+        <item name="customBackgroundColor">@color/eggplantColorBackground</item>
+        <item name="customBackgroundColorDark">@color/eggplantColorBackgroundDark</item>
+        <item name="customButtonColor">@color/eggplantColorButton</item>
+        <item name="customLayoutHighlightColor">@color/eggplantColorHighlight</item>
     </style>
+
+    <style name="Widget.Button.Primary"
+        parent="Widget.AppCompat.Button.Colored">
+        <item name="colorButtonNormal">?attr/customButtonColor</item>
+        <item name="colorControlHighlight">?attr/customBackgroundColor</item>
+        <item name="android:textColor">?attr/customTextColor</item>
+    </style>
+
 
 </resources>
