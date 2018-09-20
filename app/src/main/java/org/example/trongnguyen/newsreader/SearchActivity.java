@@ -8,6 +8,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import org.example.trongnguyen.newsreader.fragments.FavoritesFragment;
 import org.example.trongnguyen.newsreader.fragments.MainFragment;
@@ -26,7 +28,8 @@ public class SearchActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle("Custom Search");
-
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         searchFragment = new SearchFragment();
         transaction = getSupportFragmentManager().beginTransaction();
@@ -37,5 +40,20 @@ public class SearchActivity extends AppCompatActivity {
             transaction.replace(R.id.fragment_container, searchFragment, "search");
             transaction.commit();
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        return true;
     }
 }
