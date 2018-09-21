@@ -64,7 +64,13 @@ public class SearchFragment extends Fragment {
                 "Crunchyroll"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), R.layout.fragment_search_item,R.id.checked_text, items);
         listView.setAdapter(adapter);
-
+        // Loop to check if "sources" contains any items within the "items" string and check it if it does.
+        // This is how I determine which fields to auto check as these are the ones defined by the user preferences.
+        // The user is free to uncheck or check more items if they so wish. The preferences will NOT change.
+        // This is meant to be it's own entity and should not be mixed with the user preferences.
+        for (int i = 0; i < 12; i++ ) {
+            if (sources.contains(items[i].replace(" ", "_").toLowerCase())) {listView.setItemChecked(i, true);}
+        }
         // Listener to check if the checked or unchecked item is the last one.
         // This will be to prevent the user from being able to uncheck all items.
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -77,13 +83,6 @@ public class SearchFragment extends Fragment {
                 }
             }
         });
-        // Loop to check if "sources" contains any items within the "items" string and check it if it does.
-        // This is how I determine which fields to auto check as these are the ones defined by the user preferences.
-        // The user is free to uncheck or check more items if they so wish. The preferences will NOT change.
-        // This is meant to be it's own entity and should not be mixed with the user preferences.
-        for (int i = 0; i < 12; i++ ) {
-            if (sources.contains(items[i].replace(" ", "_").toLowerCase())) {listView.setItemChecked(i, true);}
-        }
         return rootView;
     }
 

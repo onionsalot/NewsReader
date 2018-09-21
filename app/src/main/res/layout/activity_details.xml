@@ -16,7 +16,8 @@
             android:layout_height="350dp"
             android:layout_width="match_parent"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            app:expandedTitleTextAppearance="@android:color/transparent"
+            app:expandedTitleTextAppearance="@style/TextAppearance.Design.CollapsingToolbar.Expanded.Shadow"
+            app:collapsedTitleTextAppearance="@style/TextAppearance.Design.CollapsingToolbar.Expanded.Shadow"
             android:fitsSystemWindows="true"
             >
 
@@ -78,7 +79,13 @@
                     android:padding="12dp"
                     android:text="TITLE TEXT"
                     android:textSize="20sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:shadowColor="#000000"
+                    android:shadowDx="3"
+                    android:shadowDy="3"
+                    android:shadowRadius="3"
+                    android:textAlignment="textStart"
+                    android:textColor="#FFFFFF" />
 
                 <TextView
                     android:id="@+id/detail_author"
@@ -111,8 +118,7 @@
                         android:layout_weight="9"
                         android:padding="12dp"
                         android:text="DESCRIPTION"
-                        android:textSize="14sp"
-                        android:textStyle="bold" />
+                        android:textSize="14sp" />
 
                 </LinearLayout>
 

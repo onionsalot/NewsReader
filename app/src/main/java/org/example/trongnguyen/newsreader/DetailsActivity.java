@@ -7,6 +7,8 @@ import android.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -65,8 +67,14 @@ public class DetailsActivity extends AppCompatActivity{
         toolbar.setTitle(currentNews.getSource());
         detailTitle.setText(currentNews.getTitle());
         detailAuthor.setText(currentNews.getAuthor());
-        detailUrl.setText(currentNews.getUrl());
-        detailDescription.setText(currentNews.getDate() + "\n" + currentNews.getDescription());
+
+        detailUrl.setClickable(true);
+        detailUrl.setMovementMethod(LinkMovementMethod.getInstance());
+        String text = "<a href='" + currentNews.getUrl() + "'> Link to full article </a>";
+        detailUrl.setText(Html.fromHtml(text));
+
+        String descriptionString = (currentNews.getDate() + "\n" + currentNews.getDescription()).replace("\n","\n\n\t");
+        detailDescription.setText(descriptionString);
         detailTags.setText("TAGS " + currentNews.getTags());
 
     }

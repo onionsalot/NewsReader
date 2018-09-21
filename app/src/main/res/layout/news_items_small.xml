@@ -11,7 +11,7 @@
     <ImageView
         android:id="@+id/article_image"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="100dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,11 +21,9 @@
     <TextView
         android:id="@+id/article_title"
         android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_height="wrap_content"
         android:background="#4D000000"
+        android:maxLines="2"
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
         android:shadowColor="#000000"
@@ -35,20 +33,15 @@
         android:text="TextView"
         android:textAlignment="textStart"
         android:textColor="#FFFFFF"
-        android:maxLines="2"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@+id/article_image"
         app:layout_constraintEnd_toEndOf="@+id/article_image"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintStart_toStartOf="@+id/article_image" />
 
     <TextView
         android:id="@+id/article_author"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
         android:background="#4D000000"
         android:maxLines="1"
         android:paddingLeft="5dp"
@@ -60,24 +53,18 @@
         android:text="TextView"
         android:textAlignment="textEnd"
         android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/article_title" />
+        app:layout_constraintBottom_toTopOf="@+id/article_title"
+        app:layout_constraintEnd_toEndOf="@+id/article_image" />
 
     <com.like.LikeButton
         android:id="@+id/heart_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginTop="8dp"
         app:icon_size="18dp"
         app:icon_type="heart"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/article_image"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/article_image"
-        app:layout_constraintTop_toTopOf="@+id/article_image" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

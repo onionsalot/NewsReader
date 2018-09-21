@@ -43,7 +43,7 @@ import java.util.Set;
 public class MainFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<News>>{
     private static final String NEWS_BASE_URL1 =
             "http://webhose.io/filterWebContent" +
-                    "?token=fae3fadc-f18f-4ec4-a8d2-25fdc41bf0ab" +
+                    "?token=a1522e48-0706-4fb7-a598-108ac1f3a821" +
                     "&format=json";
     private static final String NEWS_BASE_URL2 =
                     "&sort=published" +
@@ -68,6 +68,7 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
     ImageView layoutSmall;
     ImageView layoutMed;
     ImageView layoutLarge;
+    TextView resultsText;
     public MainFragment() { }
 
     @Override
@@ -261,6 +262,8 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
             }
         });
         colorLayout(layoutValue); // Called once the ImageViews have been inflated to highlight which item is on by default.
+        // mAdapter count placed into the results returned text;
+        resultsText = (TextView) rootView.findViewById(R.id.results_text);
         return rootView;
     }
 
@@ -297,6 +300,11 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
         super.onResume();
         if (!dataFetched) {
             progressBar.setVisibility(View.VISIBLE);
+        }
+        if (savedSession == null) {
+
+        } else {
+            resultsText.setText("Total returned: " + savedSession.size());
         }
         mAdapter.notifyDataSetChanged();
     }
@@ -411,6 +419,9 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
 
             // Once information is loaded, make the progress bar invisible again.
             progressBar.setVisibility(View.INVISIBLE);
+
+            // Print the size of the data returned onto the top bar
+            resultsText.setText("Total returned: " + savedSession.size());
         }
     }
 

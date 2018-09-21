@@ -146,6 +146,8 @@ public class FavoritesFragment extends Fragment implements LoaderManager.LoaderC
                 startActivity(intent);
             }
         });
+        TextView savedResults = (TextView) rootView.findViewById(R.id.saved_results);
+        savedResults.setText("Saved Articles: " + mNewsCursorAdapter.getCount());
     }
 
     @NonNull
