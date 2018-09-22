@@ -20,7 +20,7 @@
         <item name="customBackgroundColorDark">@color/mainColorBackgroundDark</item>
         <item name="customButtonColor">@color/mainColorButton</item>
         <item name="customLayoutHighlightColor">@color/mainColorHighlight</item>
-        <item name="heartThemeOn">@drawable/heart_on</item>
+        <item name="heartThemeOn">@drawable/heart_on_main</item>
         <item name="heartThemeOff">@drawable/heart_off</item>
         <item name="heartCirclePrimary">@color/mainColorNotification</item>
         <item name="heartCircleSecondary">@color/mainColorHighlight2</item>
@@ -45,7 +45,7 @@
         <item name="customBackgroundColorDark">@color/midnightColorBackgroundDark</item>
         <item name="customButtonColor">@color/midnightColorButton</item>
         <item name="customLayoutHighlightColor">@color/midnightColorHighlight</item>
-        <item name="heartThemeOn">@drawable/heart_on</item>
+        <item name="heartThemeOn">@drawable/heart_on_midnight</item>
         <item name="heartThemeOff">@drawable/heart_off</item>
         <item name="heartCirclePrimary">@color/midnightColorNotification</item>
         <item name="heartCircleSecondary">@color/midnightColorHighlight2</item>
@@ -70,7 +70,7 @@
         <item name="customBackgroundColorDark">@color/cottonColorBackgroundDark</item>
         <item name="customButtonColor">@color/cottonColorButton</item>
         <item name="customLayoutHighlightColor">@color/cottonColorHighlight</item>
-        <item name="heartThemeOn">@drawable/heart_on</item>
+        <item name="heartThemeOn">@drawable/heart_on_cotton</item>
         <item name="heartThemeOff">@drawable/heart_off</item>
         <item name="heartCirclePrimary">@color/cottonColorNotification</item>
         <item name="heartCircleSecondary">@color/cottonColorHighlight2</item>
@@ -95,7 +95,7 @@
         <item name="customBackgroundColorDark">@color/rockColorBackgroundDark</item>
         <item name="customButtonColor">@color/rockColorButton</item>
         <item name="customLayoutHighlightColor">@color/rockColorHighlight</item>
-        <item name="heartThemeOn">@drawable/heart_on</item>
+        <item name="heartThemeOn">@drawable/heart_on_rock</item>
         <item name="heartThemeOff">@drawable/heart_off</item>
         <item name="heartCirclePrimary">@color/rockColorNotification</item>
         <item name="heartCircleSecondary">@color/rockColorHighlight2</item>
@@ -120,7 +120,7 @@
         <item name="customBackgroundColorDark">@color/limeColorBackgroundDark</item>
         <item name="customButtonColor">@color/limeColorButton</item>
         <item name="customLayoutHighlightColor">@color/limeColorHighlight</item>
-        <item name="heartThemeOn">@drawable/heart_on</item>
+        <item name="heartThemeOn">@drawable/heart_on_lime</item>
         <item name="heartThemeOff">@drawable/heart_off</item>
         <item name="heartCirclePrimary">@color/limeColorNotification</item>
         <item name="heartCircleSecondary">@color/limeColorHighlight2</item>
@@ -145,7 +145,7 @@
         <item name="customBackgroundColorDark">@color/rainColorBackgroundDark</item>
         <item name="customButtonColor">@color/rainColorButton</item>
         <item name="customLayoutHighlightColor">@color/rainColorHighlight</item>
-        <item name="heartThemeOn">@drawable/heart_on</item>
+        <item name="heartThemeOn">@drawable/heart_on_rain</item>
         <item name="heartThemeOff">@drawable/heart_off</item>
         <item name="heartCirclePrimary">@color/rainColorNotification</item>
         <item name="heartCircleSecondary">@color/rainColorHighlight2</item>
