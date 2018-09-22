@@ -135,6 +135,9 @@ public class MainActivity extends AppCompatActivity {
                         Intent intent = new Intent(getApplicationContext(), FavoritesActivity.class);
                         startActivity(intent);
                         break;
+                    case R.id.nav_about:
+                        Intent aboutIntent = new Intent(getApplicationContext(), AboutActivity.class);
+                        startActivity(aboutIntent);
                     default:
                         break;
                 }

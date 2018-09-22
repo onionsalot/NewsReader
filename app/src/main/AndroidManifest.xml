@@ -26,13 +26,17 @@
         </activity>
         <activity
             android:name=".SearchActivity"
-            android:label="Custom Search"></activity>
-        <activity android:name=".FavoritesActivity"
-            android:label="Favorites"></activity>
+            android:label="Custom Search" />
+        <activity
+            android:name=".FavoritesActivity"
+            android:label="Favorites" />
+
         <provider
             android:name=".data.NewsProvider"
             android:authorities="org.example.trongnguyen.newsreader"
             android:exported="false" />
+
+        <activity android:name=".AboutActivity"></activity>
     </application>
 
 </manifest>

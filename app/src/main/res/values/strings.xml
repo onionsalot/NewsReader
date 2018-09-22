@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">News Reader</string>
 
 
@@ -12,4 +12,42 @@
 
     <string name="navigation_drawer_open">Open Navigation Drawer</string>
     <string name="navigation_drawer_close">Close Navigation Drawer</string>
+
+    <string name="about_page">
+        Summary: \n\t This app is for demonstration purposes. The main purpose is to scrape for news
+        specified by the user and print it out for them. The homepage will display the user\'s preferred
+        new sources along with new topics to them which can be changed via the settings menu. They may
+        also do a custom search from the homescreen for articles that may interest them. Lastly, they may
+        also favorite articles they either wish to save or view later.
+    </string>
+    <string name="about_page2">
+        Fragments and Activities: \nThis app is made using fragments attached to several different activities. The Settings and Homepage
+        in specific were attached to the Main Activity to allow for smooth transition between them. Several fragments
+        were also reused multiple times to save space and have less files.
+        \n\n
+        Navigation: \nThe Navigation panel is useful for getting around the app quickly. Unfortunately
+        I had not planned the navigation properly and played around too much with backstacks. I had already
+        invested too much into the current setup to alter it too heavily but as a quick note, settings should have
+        been it\'s own activity and thus would\'ve made more sense as settings did not need a backstack created.
+        \n\n
+        Themes and Layouts: \nSimilar to the books app, this app also features the use of custom themes. It has been
+        touched up on and made to adapt better with Fragments as oppose to just Activities. Introduced here is the idea of layouts
+        and layout changes to the list itself. The adapter is able to handle the layout change without interrupting the integrity
+        of the data and thus users are able to seemlessly transition between layouts. ViewHolders and Constraint layouts were
+        used to keep the app from sluggish performance. The books app used lots of nested layouts and thus would studder if
+        too much information is presented at the same time. This approach allowed for all the views to be displayed and subsequently
+        garbage collected without much impact to the user experience.
+        \n\n
+        Favorites: \nThe favorites panel is comprised of both an Adapter to handle the views displayed on the screen,
+        and also an SQLite setup, used to handle more complicated and larger datasets that SharedPreferences was not able to handle.
+        When the user "favorites" an article, the article will then save the information passed in by the article into it\'s
+        respective fields inside of the SQLite table. The homescreen will display items that are favorited represented by a highlighted
+        heart shape. Underneath the hood, the adapter is creating each view after comparing if the news item\'s UID is similar to
+        our SQLite table\'s UID. If there is a match, the adapter will show that the article has already been favorited.
+        A sort function has also been able to the SQLite table to allow the user more control over their data.
+        \nI made it so that once the item is clicked in favorites, it will take you directly to the article. Due to the
+        nature of the API, the user will have to wait 5 seconds before being presented with the site. This is the free
+        version of the API after all and the paid version would\'ve taken the user directly to the site.
+
+    </string>
 </resources>
