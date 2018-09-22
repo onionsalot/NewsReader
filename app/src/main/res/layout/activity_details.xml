@@ -40,12 +40,20 @@
                 app:layout_collapseMode="pin"
                 />
 
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="56dp"
-                android:layout_height="43dp"
-                android:layout_gravity="bottom|right"
-                app:srcCompat="@drawable/heart_off" />
+            <com.like.LikeButton
+                android:id="@+id/heart_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                app:like_drawable="?attr/heartThemeOn"
+                app:unlike_drawable="?attr/heartThemeOff"
+                app:icon_size="40dp"
+                app:icon_type="heart"
+                app:anim_scale_factor="2"
+                app:circle_start_color="?attr/heartCirclePrimary"
+                app:circle_end_color="?attr/heartCircleSecondary"
+                app:dots_primary_color="?attr/heartCirclePrimary"
+                app:dots_secondary_color="?attr/heartCircleSecondary"/>
 
 
         </android.support.design.widget.CollapsingToolbarLayout>
