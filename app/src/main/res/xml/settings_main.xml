@@ -4,7 +4,7 @@
     <PreferenceCategory android:layout="@layout/preference_categories" android:title="Current Theme" >
 
         <ListPreference
-            android:title="Eggplant (default)"
+            android:title="Main Theme (default)"
             android:summary="Select your favorite theme"
             android:key="theme"
             android:defaultValue="1"

@@ -57,6 +57,7 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
     private boolean endOfList = false;
     private boolean doNothing = false;
     private boolean dataFetched = false; // Primarily to check if onResume needs to show a progress bar.
+    private boolean listenerThemeChanged = false; // if the theme has changed in settings, settings listener will invoke this and change to true
     private SharedPreferences.OnSharedPreferenceChangeListener spChangedListener;
     private SharedPreferences sp;
     int currentViewCount = 10;
@@ -109,6 +110,10 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
                 Log.d(TAG, "onSharedPreferenceChanged: change detected + " + sharedPreferences + key);
                 if (key.equals("layout")) {
 
+                } else if (key.equals("theme")) {
+                    listenerThemeChanged = true;
+                    listView.setAdapter(null);
+                    mAdapter.notifyDataSetChanged();
                 } else {
                     clearAdapter();
                 }
@@ -306,8 +311,15 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
         } else {
             resultsText.setText("Total returned: " + savedSession.size());
         }
+        // Upon a resume, if the theme has been changed by a setting change, the changeLayout method
+        // Will be called to reload the layout.
+        if (listenerThemeChanged) {
+            changeLayout(layoutValue); // Defined in onCreate and changed each time a new layout is created
+            listenerThemeChanged = false;
+        }
         mAdapter.notifyDataSetChanged();
     }
+
 
     @Override
     public void onPause() {
@@ -576,7 +588,6 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
         listView.setAdapter(mAdapter);
         LoaderManager loaderManager = getLoaderManager();
         loaderManager.initLoader(0, null, this);
-
 
         Log.d(TAG, "changeLayout: layoutValue" + layoutValue);
     }

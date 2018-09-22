@@ -17,15 +17,21 @@
     </string-array>
 
     <string-array name="themeArray">
-        <item>Eggplant</item>
-        <item>Earthy</item>
-        <item>CottonCandy</item>
+        <item>Main</item>
+        <item>Midnight</item>
+        <item>Cotton Candy</item>
+        <item>Rocks and Roses</item>
+        <item>Lime Contrast</item>
+        <item>Moody Rain</item>
     </string-array>
 
     <string-array name="themeValues">
         <item>1</item>
         <item>2</item>
         <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
     </string-array>
 
     <string-array name="news_source_pref">

@@ -5,20 +5,152 @@
         <item name="primaryButtonTheme">
             @style/Widget.AppCompat.Button.Colored
         </item>
-        <item name="colorPrimary">@color/eggplantColorBackground</item>
-        <item name="colorPrimaryDark">@color/eggplantColorNotification</item>
-        <item name="colorButtonNormal">@color/eggplantColorHighlight</item>
-        <item name="colorAccent">@color/eggplantColorHighlight</item>
-        <item name="android:textColor">@color/eggplantColorText</item>
-        <item name="customTextColor">@color/eggplantColorText</item>
-        <item name="customToolbarColor">@color/eggplantColorToolbar</item>
-        <item name="customNotificationColor">@color/eggplantColorNotification</item>
-        <item name="customInfoBarColor">@color/eggplantColorInfoBar</item>
-        <item name="customBackgroundColor">@color/eggplantColorBackground</item>
-        <item name="customBackgroundColorDark">@color/eggplantColorBackgroundDark</item>
-        <item name="customButtonColor">@color/eggplantColorButton</item>
-        <item name="customLayoutHighlightColor">@color/eggplantColorHighlight</item>
+        <item name="colorPrimary">@color/mainColorBackground</item>
+        <item name="colorPrimaryDark">@color/mainColorNotification</item>
+        <item name="colorButtonNormal">@color/mainColorHighlight</item>
+        <item name="colorAccent">@color/mainColorHighlight</item>
+        <item name="android:textColor">@color/mainColorText</item>
+        <item name="android:textColorSecondary">@color/mainSecondaryColorText</item>
+        <item name="android:textColorHint">@color/mainSecondaryColorText</item>
+        <item name="customTextColor">@color/mainColorText</item>
+        <item name="customToolbarColor">@color/mainColorToolbar</item>
+        <item name="customNotificationColor">@color/mainColorNotification</item>
+        <item name="customInfoBarColor">@color/mainColorInfoBar</item>
+        <item name="customBackgroundColor">@color/mainColorBackground</item>
+        <item name="customBackgroundColorDark">@color/mainColorBackgroundDark</item>
+        <item name="customButtonColor">@color/mainColorButton</item>
+        <item name="customLayoutHighlightColor">@color/mainColorHighlight</item>
+        <item name="heartThemeOn">@drawable/heart_on</item>
+        <item name="heartThemeOff">@drawable/heart_off</item>
+        <item name="heartCirclePrimary">@color/mainColorNotification</item>
+        <item name="heartCircleSecondary">@color/mainColorHighlight2</item>
     </style>
+    <!-- Midnight theme -->
+    <style name="Midnight" parent="Theme.AppCompat.NoActionBar">
+        <item name="primaryButtonTheme">
+            @style/Widget.AppCompat.Button.Colored
+        </item>
+        <item name="colorPrimary">@color/midnightColorBackground</item>
+        <item name="colorPrimaryDark">@color/midnightColorNotification</item>
+        <item name="colorButtonNormal">@color/midnightColorHighlight</item>
+        <item name="colorAccent">@color/midnightColorHighlight</item>
+        <item name="android:textColor">@color/midnightColorText</item>
+        <item name="android:textColorSecondary">@color/midnightSecondaryColorText</item>
+        <item name="android:textColorHint">@color/midnightSecondaryColorText</item>
+        <item name="customTextColor">@color/midnightColorText</item>
+        <item name="customToolbarColor">@color/midnightColorToolbar</item>
+        <item name="customNotificationColor">@color/midnightColorNotification</item>
+        <item name="customInfoBarColor">@color/midnightColorInfoBar</item>
+        <item name="customBackgroundColor">@color/midnightColorBackground</item>
+        <item name="customBackgroundColorDark">@color/midnightColorBackgroundDark</item>
+        <item name="customButtonColor">@color/midnightColorButton</item>
+        <item name="customLayoutHighlightColor">@color/midnightColorHighlight</item>
+        <item name="heartThemeOn">@drawable/heart_on</item>
+        <item name="heartThemeOff">@drawable/heart_off</item>
+        <item name="heartCirclePrimary">@color/midnightColorNotification</item>
+        <item name="heartCircleSecondary">@color/midnightColorHighlight2</item>
+    </style>
+    <!-- Cotton theme -->
+    <style name="cottonCandy" parent="Theme.AppCompat.NoActionBar">
+        <item name="primaryButtonTheme">
+            @style/Widget.AppCompat.Button.Colored
+        </item>
+        <item name="colorPrimary">@color/cottonColorBackground</item>
+        <item name="colorPrimaryDark">@color/cottonColorNotification</item>
+        <item name="colorButtonNormal">@color/cottonColorHighlight</item>
+        <item name="colorAccent">@color/cottonColorHighlight</item>
+        <item name="android:textColor">@color/cottonColorText</item>
+        <item name="android:textColorSecondary">@color/cottonSecondaryColorText</item>
+        <item name="android:textColorHint">@color/cottonSecondaryColorText</item>
+        <item name="customTextColor">@color/cottonColorText</item>
+        <item name="customToolbarColor">@color/cottonColorToolbar</item>
+        <item name="customNotificationColor">@color/cottonColorNotification</item>
+        <item name="customInfoBarColor">@color/cottonColorInfoBar</item>
+        <item name="customBackgroundColor">@color/cottonColorBackground</item>
+        <item name="customBackgroundColorDark">@color/cottonColorBackgroundDark</item>
+        <item name="customButtonColor">@color/cottonColorButton</item>
+        <item name="customLayoutHighlightColor">@color/cottonColorHighlight</item>
+        <item name="heartThemeOn">@drawable/heart_on</item>
+        <item name="heartThemeOff">@drawable/heart_off</item>
+        <item name="heartCirclePrimary">@color/cottonColorNotification</item>
+        <item name="heartCircleSecondary">@color/cottonColorHighlight2</item>
+    </style>
+    <!-- Rock and Roses theme -->
+    <style name="rockRoses" parent="Theme.AppCompat.NoActionBar">
+        <item name="primaryButtonTheme">
+            @style/Widget.AppCompat.Button.Colored
+        </item>
+        <item name="colorPrimary">@color/rockColorBackground</item>
+        <item name="colorPrimaryDark">@color/rockColorNotification</item>
+        <item name="colorButtonNormal">@color/rockColorHighlight</item>
+        <item name="colorAccent">@color/rockColorHighlight</item>
+        <item name="android:textColor">@color/rockColorText</item>
+        <item name="android:textColorSecondary">@color/rockSecondaryColorText</item>
+        <item name="android:textColorHint">@color/rockSecondaryColorText</item>
+        <item name="customTextColor">@color/rockColorText</item>
+        <item name="customToolbarColor">@color/rockColorToolbar</item>
+        <item name="customNotificationColor">@color/rockColorNotification</item>
+        <item name="customInfoBarColor">@color/rockColorInfoBar</item>
+        <item name="customBackgroundColor">@color/rockColorBackground</item>
+        <item name="customBackgroundColorDark">@color/rockColorBackgroundDark</item>
+        <item name="customButtonColor">@color/rockColorButton</item>
+        <item name="customLayoutHighlightColor">@color/rockColorHighlight</item>
+        <item name="heartThemeOn">@drawable/heart_on</item>
+        <item name="heartThemeOff">@drawable/heart_off</item>
+        <item name="heartCirclePrimary">@color/rockColorNotification</item>
+        <item name="heartCircleSecondary">@color/rockColorHighlight2</item>
+    </style>
+    <!-- Lime Contrast theme -->
+    <style name="limeContrast" parent="Theme.AppCompat.NoActionBar">
+        <item name="primaryButtonTheme">
+            @style/Widget.AppCompat.Button.Colored
+        </item>
+        <item name="colorPrimary">@color/limeColorBackground</item>
+        <item name="colorPrimaryDark">@color/limeColorNotification</item>
+        <item name="colorButtonNormal">@color/limeColorHighlight</item>
+        <item name="colorAccent">@color/limeColorHighlight</item>
+        <item name="android:textColor">@color/limeColorText</item>
+        <item name="android:textColorSecondary">@color/limeSecondaryColorText</item>
+        <item name="android:textColorHint">@color/limeSecondaryColorText</item>
+        <item name="customTextColor">@color/limeColorText</item>
+        <item name="customToolbarColor">@color/limeColorToolbar</item>
+        <item name="customNotificationColor">@color/limeColorNotification</item>
+        <item name="customInfoBarColor">@color/limeColorInfoBar</item>
+        <item name="customBackgroundColor">@color/limeColorBackground</item>
+        <item name="customBackgroundColorDark">@color/limeColorBackgroundDark</item>
+        <item name="customButtonColor">@color/limeColorButton</item>
+        <item name="customLayoutHighlightColor">@color/limeColorHighlight</item>
+        <item name="heartThemeOn">@drawable/heart_on</item>
+        <item name="heartThemeOff">@drawable/heart_off</item>
+        <item name="heartCirclePrimary">@color/limeColorNotification</item>
+        <item name="heartCircleSecondary">@color/limeColorHighlight2</item>
+    </style>
+    <!-- Moody Rain theme -->
+    <style name="moodyRain" parent="Theme.AppCompat.NoActionBar">
+        <item name="primaryButtonTheme">
+            @style/Widget.AppCompat.Button.Colored
+        </item>
+        <item name="colorPrimary">@color/rainColorBackground</item>
+        <item name="colorPrimaryDark">@color/rainColorNotification</item>
+        <item name="colorButtonNormal">@color/rainColorHighlight</item>
+        <item name="colorAccent">@color/rainColorHighlight</item>
+        <item name="android:textColor">@color/rainColorText</item>
+        <item name="android:textColorSecondary">@color/rainSecondaryColorText</item>
+        <item name="android:textColorHint">@color/rainSecondaryColorText</item>
+        <item name="customTextColor">@color/rainColorText</item>
+        <item name="customToolbarColor">@color/rainColorToolbar</item>
+        <item name="customNotificationColor">@color/rainColorNotification</item>
+        <item name="customInfoBarColor">@color/rainColorInfoBar</item>
+        <item name="customBackgroundColor">@color/rainColorBackground</item>
+        <item name="customBackgroundColorDark">@color/rainColorBackgroundDark</item>
+        <item name="customButtonColor">@color/rainColorButton</item>
+        <item name="customLayoutHighlightColor">@color/rainColorHighlight</item>
+        <item name="heartThemeOn">@drawable/heart_on</item>
+        <item name="heartThemeOff">@drawable/heart_off</item>
+        <item name="heartCirclePrimary">@color/rainColorNotification</item>
+        <item name="heartCircleSecondary">@color/rainColorHighlight2</item>
+    </style>
+
 
     <style name="Widget.Button.Primary"
         parent="Widget.AppCompat.Button.Colored">
@@ -28,6 +160,14 @@
     </style>
 
     <style name="TextAppearance.Design.CollapsingToolbar.Expanded.Shadow">
+        <item name="android:shadowDy">0</item>
+        <item name="android:shadowDx">0</item>
+        <item name="android:shadowRadius">8</item>
+        <item name="android:shadowColor">@android:color/black</item>
+    </style>
+
+    <style name="collapsedShadow">
+        <item name="android:textColor">#FFFFFF</item>
         <item name="android:shadowDy">0</item>
         <item name="android:shadowDx">0</item>
         <item name="android:shadowRadius">8</item>

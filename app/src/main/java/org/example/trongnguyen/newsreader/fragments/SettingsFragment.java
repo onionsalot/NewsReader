@@ -37,10 +37,10 @@ public class SettingsFragment extends Fragment {
     }
 
 
-
     public static class NewsPreferenceFragment extends PreferenceFragment {
         MultiSelectListPreference source;
         String themeChooserText;
+        ListPreference themeListener;
 
         @Override
         public void onCreate(Bundle savedInstanceState) {
@@ -65,7 +65,19 @@ public class SettingsFragment extends Fragment {
                 }
             });
 
+            themeListener = (ListPreference) findPreference("theme");
+            //themeListener.setTitle(themeListText);
+            themeListener.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object newValue) {
+                    getActivity().recreate();
+                    return true;
+                }
+            });
+
         }
     }
+
+
 
 }

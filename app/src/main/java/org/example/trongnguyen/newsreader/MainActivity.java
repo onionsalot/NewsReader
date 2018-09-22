@@ -3,6 +3,7 @@ package org.example.trongnguyen.newsreader;
 import android.app.LoaderManager;
 import android.content.Intent;
 import android.content.Loader;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -33,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        SharedPreferences themePref = PreferenceManager.getDefaultSharedPreferences(this);
+        themeChooser(themePref.getString("theme", "1"));
         super.onCreate(savedInstanceState);
         // For first time runs, the preferences will not load quick enough and cause the app
         // to crash due to not having the right preferences to create a URL. This time
@@ -46,18 +49,18 @@ public class MainActivity extends AppCompatActivity {
         toolbar.setTitle("News Feed");
 
         /*
-        * Activity_main_fragments.xml consists of:
-        * DrawerLayout with name drawer_layout as parent to all the fields
-        * Toolbar with id toolbar
-        * Fragment container w/ id fragment_container to hold the main fragment that is active. Will be used later
-        * NavigationView w/ id nav_view to display the side menu.
-        *
-        * Here we find the drawer_layout, then find the NavigationView, and activate them with a lister
-        * so that it will respond to pulling out.
-        */
+         * Activity_main_fragments.xml consists of:
+         * DrawerLayout with name drawer_layout as parent to all the fields
+         * Toolbar with id toolbar
+         * Fragment container w/ id fragment_container to hold the main fragment that is active. Will be used later
+         * NavigationView w/ id nav_view to display the side menu.
+         *
+         * Here we find the drawer_layout, then find the NavigationView, and activate them with a lister
+         * so that it will respond to pulling out.
+         */
         drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawer,toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
 
 
@@ -77,21 +80,21 @@ public class MainActivity extends AppCompatActivity {
 
 
         /*
-        *
-        * The NavigationView's listener.
-        * This will house the choices and functions for each of the Navigation objects that are clickable.
-        * Each navigation will function in a similar way.
-        *
-        * Check to see if either of the fragments NOT picked are active. If they are, hide them.
-        * Finally check if the fragment picked had ever been initialized. If it has, simply "show"
-        * it into frontal view. If it has not, "add" it to the current frontal View. Add is used because
-        * it will not destroy the fragment that it is replacing. "replace" is another option but that would
-        * destroy the replaced fragment unless backstacks are used. The way that the app functions now,
-        * there is no real need for backstacks are "searches" and "details" are both performed on exterior
-        * Intents.
-        *
-        * REVISED*
-        *
+         *
+         * The NavigationView's listener.
+         * This will house the choices and functions for each of the Navigation objects that are clickable.
+         * Each navigation will function in a similar way.
+         *
+         * Check to see if either of the fragments NOT picked are active. If they are, hide them.
+         * Finally check if the fragment picked had ever been initialized. If it has, simply "show"
+         * it into frontal view. If it has not, "add" it to the current frontal View. Add is used because
+         * it will not destroy the fragment that it is replacing. "replace" is another option but that would
+         * destroy the replaced fragment unless backstacks are used. The way that the app functions now,
+         * there is no real need for backstacks are "searches" and "details" are both performed on exterior
+         * Intents.
+         *
+         * REVISED*
+         *
          */
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -135,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
                         searchItem.setVisible(false);
                         break;
                     case R.id.nav_favorites:
-                        Intent intent = new Intent (getApplicationContext(), FavoritesActivity.class);
+                        Intent intent = new Intent(getApplicationContext(), FavoritesActivity.class);
                         startActivity(intent);
                         break;
                     default:
@@ -145,8 +148,6 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
-
-
 
 
     }
@@ -183,17 +184,42 @@ public class MainActivity extends AppCompatActivity {
         searchItem = menu.findItem(R.id.action_menu_search);
         return true;
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // User clicked on a menu option in the app bar overflow menu
         switch (item.getItemId()) {
             // Search is only available when on the Main Fragment. Will redirect us to the search class
             case R.id.action_menu_search:
-                Intent intent = new Intent (getApplicationContext(), SearchActivity.class);
+                Intent intent = new Intent(getApplicationContext(), SearchActivity.class);
                 startActivity(intent);
                 return true;
 
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void themeChooser(String theme) {
+        switch (theme) {
+            case "1":
+                setTheme(R.style.AppTheme);
+                break;
+            case "2":
+                setTheme(R.style.Midnight);
+                break;
+            case "3":
+                setTheme(R.style.cottonCandy);
+                break;
+            case "4":
+                setTheme(R.style.rockRoses);
+                break;
+            case "5":
+                setTheme(R.style.limeContrast);
+                break;
+            case "6":
+                setTheme(R.style.moodyRain);
+                break;
+
+        }
     }
 }

@@ -36,6 +36,7 @@
         android:shadowDy="3"
         android:shadowRadius="3"
         android:text="TextView"
+        android:textColor="#FFFFFF"
         android:textAlignment="center"
         app:autoSizeMaxTextSize="18sp"
         app:autoSizeMinTextSize="15sp"
@@ -83,11 +84,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        app:icon_size="18dp"
-        app:icon_type="heart"
         app:layout_constraintBottom_toBottomOf="@+id/article_image"
         app:layout_constraintEnd_toEndOf="@+id/article_image"
         app:layout_constraintTop_toTopOf="@+id/article_image"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"
+        app:like_drawable="?attr/heartThemeOn"
+        app:unlike_drawable="?attr/heartThemeOff"
+        app:icon_size="25dp"
+        app:icon_type="heart"
+        app:anim_scale_factor="2"
+        app:circle_start_color="?attr/heartCirclePrimary"
+        app:circle_end_color="?attr/heartCircleSecondary"
+        app:dots_primary_color="?attr/heartCirclePrimary"
+        app:dots_secondary_color="?attr/heartCircleSecondary"/>
 
 </android.support.constraint.ConstraintLayout>

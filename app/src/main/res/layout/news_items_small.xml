@@ -62,9 +62,16 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginTop="8dp"
-        app:icon_size="18dp"
-        app:icon_type="heart"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:like_drawable="?attr/heartThemeOn"
+        app:unlike_drawable="?attr/heartThemeOff"
+        app:icon_size="23dp"
+        app:icon_type="heart"
+        app:anim_scale_factor="2"
+        app:circle_start_color="?attr/heartCirclePrimary"
+        app:circle_end_color="?attr/heartCircleSecondary"
+        app:dots_primary_color="?attr/heartCirclePrimary"
+        app:dots_secondary_color="?attr/heartCircleSecondary"/>
 
 </android.support.constraint.ConstraintLayout>

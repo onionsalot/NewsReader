@@ -36,6 +36,7 @@
         android:background="?attr/customBackgroundColor"
         android:layout_gravity="start"
         android:id="@+id/nav_view"
+        app:itemTextColor="?attr/customTextColor"
         app:headerLayout="@layout/nav_header"
         app:itemIconTint="?attr/customLayoutHighlightColor"
         app:menu="@menu/drawer_menu" />

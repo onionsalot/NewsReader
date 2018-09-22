@@ -9,4 +9,8 @@
     <attr name="customButtonColor" format="reference" />
     <attr name="customLayoutHighlightColor" format="reference"/>
     <attr name="primaryButtonTheme" format="reference" />
+    <attr name="heartThemeOn" format="reference" />
+    <attr name="heartThemeOff" format="reference" />
+    <attr name="heartCirclePrimary" format="reference" />
+    <attr name="heartCircleSecondary" format="reference" />
 </resources>

@@ -1,14 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Main Theme -->
+    <color name="mainColorText">#000000</color><!-- Main Text Color -->
+    <color name="mainSecondaryColorText">#26327F</color><!-- Main Text Color -->
+    <color name="mainColorToolbar">#3F51B5</color><!-- Main Toolbar Color -->
+    <color name="mainColorNotification">#303F9F</color><!-- Notification Color -->
+    <color name="mainColorInfoBar">#303F9F</color><!-- Color of the bar under the toolbar -->
+    <color name="mainColorBackground">#F8F8F8</color><!-- Main background color -->
+    <color name="mainColorBackgroundDark">#9E9E9E</color><!-- Main dark background Color -->
+    <color name="mainColorButton">#3F51B5</color><!-- Button color -->
+    <color name="mainColorHighlight">#448AFF</color><!-- Highlighted Items / Heart highlight -->
+    <color name="mainColorHighlight2">#B2CFFF</color><!-- Brighter version of the highlights -->
 
-    <color name="eggplantColorText">#FFFFFF</color><!-- Main Toolbar Color -->
-    <color name="eggplantColorToolbar">#741c7a</color><!-- Main Toolbar Color -->
-    <color name="eggplantColorNotification">#601765</color><!-- Notification Color -->
-    <color name="eggplantColorInfoBar">#601765</color><!-- Main Button Color -->
-    <color name="eggplantColorBackground">#303030</color><!-- Main Background Color -->
-    <color name="eggplantColorBackgroundDark">#202020</color><!-- Main Background Color -->
-    <color name="eggplantColorButton">#601765</color><!-- Main Background Color -->
-    <color name="eggplantColorHighlight">#804584</color><!-- Main Background Color -->
+    <!-- Midnight Theme -->
+    <color name="midnightColorText">#FFFFFF</color><!-- Main Text Color -->
+    <color name="midnightSecondaryColorText">#BDA0C1</color><!-- Main Text Color -->
+    <color name="midnightColorToolbar">#741c7a</color><!-- Main Toolbar Color -->
+    <color name="midnightColorNotification">#601765</color><!-- Notification Color -->
+    <color name="midnightColorInfoBar">#601765</color><!-- Color of the bar under the toolbar -->
+    <color name="midnightColorBackground">#303030</color><!-- Main background color -->
+    <color name="midnightColorBackgroundDark">#202020</color><!-- Main dark background Color -->
+    <color name="midnightColorButton">#601765</color><!-- Button color -->
+    <color name="midnightColorHighlight">#804584</color><!-- Highlighted Items / Heart highlight -->
+    <color name="midnightColorHighlight2">#BDA0C1</color><!-- Brighter version of the highlights -->
 
+    <!-- Cotton Candy Theme -->
+    <color name="cottonColorText">#000000</color><!-- Main Text Color -->
+    <color name="cottonSecondaryColorText">#825661</color><!-- Main Text Color -->
+    <color name="cottonColorToolbar">#ffa8bd</color><!-- Main Toolbar Color -->
+    <color name="cottonColorNotification">#cc8697</color><!-- Notification Color -->
+    <color name="cottonColorInfoBar">#cc8697</color><!-- Color of the bar under the toolbar -->
+    <color name="cottonColorBackground">#86a4cc</color><!-- Main background color -->
+    <color name="cottonColorBackgroundDark">#566982</color><!-- Main dark background Color -->
+    <color name="cottonColorButton">#ffa8bd</color><!-- Button color -->
+    <color name="cottonColorHighlight">#FFD2DD</color><!-- Highlighted Items / Heart highlight -->
+    <color name="cottonColorHighlight2">#FFEDF1</color><!-- Brighter version of the highlights -->
 
+    <!-- Rock and Roses Theme -->
+    <color name="rockColorText">#000000</color><!-- Main Text Color -->
+    <color name="rockSecondaryColorText">#60241E</color><!-- Main Text Color -->
+    <color name="rockColorToolbar">#BC4639</color><!-- Main Toolbar Color -->
+    <color name="rockColorNotification">#5C2018</color><!-- Notification Color -->
+    <color name="rockColorInfoBar">#5C2018</color><!-- Color of the bar under the toolbar -->
+    <color name="rockColorBackground">#F3E0DC</color><!-- Main background color -->
+    <color name="rockColorBackgroundDark">#9B8F8D</color><!-- Main dark background Color -->
+    <color name="rockColorButton">#BC4639</color><!-- Button color -->
+    <color name="rockColorHighlight">#7D4D46</color><!-- Highlighted Items / Heart highlight -->
+    <color name="rockColorHighlight2">#AC8D89</color><!-- Brighter version of the highlights -->
+
+    <!-- Lime Contrast Theme -->
+    <color name="limeColorText">#D7D7D7</color><!-- Main Text Color -->
+    <color name="limeSecondaryColorText">#45631A</color><!-- Main Text Color -->
+    <color name="limeColorToolbar">#86C232</color><!-- Main Toolbar Color -->
+    <color name="limeColorNotification">#61892F</color><!-- Notification Color -->
+    <color name="limeColorInfoBar">#61892F</color><!-- Color of the bar under the toolbar -->
+    <color name="limeColorBackground">#222629</color><!-- Main background color -->
+    <color name="limeColorBackgroundDark">#121315</color><!-- Main dark background Color -->
+    <color name="limeColorButton">#86C232</color><!-- Button color -->
+    <color name="limeColorHighlight">#B1D87C</color><!-- Highlighted Items / Heart highlight -->
+    <color name="limeColorHighlight2">#CDE6AB</color><!-- Brighter version of the highlights -->
+
+    <!-- Moody Rain Theme -->
+    <color name="rainColorText">#CCCCCC</color><!-- Main Text Color -->
+    <color name="rainSecondaryColorText">#B3B1BD</color><!-- Main Text Color -->
+    <color name="rainColorToolbar">#45415E</color><!-- Main Toolbar Color -->
+    <color name="rainColorNotification">#2B4251</color><!-- Notification Color -->
+    <color name="rainColorInfoBar">#2B4251</color><!-- Color of the bar under the toolbar -->
+    <color name="rainColorBackground">#2E323C</color><!-- Main background color -->
+    <color name="rainColorBackgroundDark">#1E2026</color><!-- Main dark background Color -->
+    <color name="rainColorButton">#45415E</color><!-- Button color -->
+    <color name="rainColorHighlight">#888598</color><!-- Highlighted Items / Heart highlight -->
+    <color name="rainColorHighlight2">#B3B1BD</color><!-- Brighter version of the highlights -->
 </resources>
