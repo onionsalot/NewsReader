@@ -45,7 +45,7 @@ public class SettingsFragment extends Fragment {
         @Override
         public void onCreate(Bundle savedInstanceState) {
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-            themeChooserText = prefs.getString("theme", "1");
+            themeChooserText = changeThemeText(prefs.getString("theme", "1"));
 
             super.onCreate(savedInstanceState);
 
@@ -74,7 +74,35 @@ public class SettingsFragment extends Fragment {
                     return true;
                 }
             });
+            themeListener.setTitle(themeChooserText);
 
+        }
+
+        private String changeThemeText(String value) {
+            String returnText = null;
+            switch (value){
+                case "1":
+                    returnText = "Main Theme(default)";
+                    break;
+                case "2":
+                    returnText = "Midnight";
+                    break;
+                case "3":
+                    returnText = "Cotton Candy";
+                    break;
+                case "4":
+                    returnText = "Rocks and Roses";
+                    break;
+                case "5":
+                    returnText = "Lime Contrast";
+                    break;
+                case "6":
+                    returnText = "Moody Rain";
+                    break;
+                case "default":
+                    break;
+            }
+            return returnText;
         }
     }
 
