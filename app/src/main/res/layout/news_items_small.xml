@@ -22,7 +22,7 @@
         android:id="@+id/article_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="#4D000000"
+        android:background="@drawable/square"
         android:maxLines="2"
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
@@ -42,7 +42,7 @@
         android:id="@+id/article_author"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="#4D000000"
+        android:background="@drawable/square"
         android:maxLines="1"
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
@@ -53,25 +53,24 @@
         android:text="TextView"
         android:textAlignment="textEnd"
         android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toTopOf="@+id/article_title"
-        app:layout_constraintEnd_toEndOf="@+id/article_image" />
+        android:textSize="10sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/article_image" />
 
     <com.like.LikeButton
         android:id="@+id/heart_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:like_drawable="?attr/heartThemeOn"
-        app:unlike_drawable="?attr/heartThemeOff"
+        app:anim_scale_factor="2"
+        app:circle_end_color="?attr/heartCircleSecondary"
+        app:circle_start_color="?attr/heartCirclePrimary"
+        app:dots_primary_color="?attr/heartCirclePrimary"
+        app:dots_secondary_color="?attr/heartCircleSecondary"
         app:icon_size="23dp"
         app:icon_type="heart"
-        app:anim_scale_factor="2"
-        app:circle_start_color="?attr/heartCirclePrimary"
-        app:circle_end_color="?attr/heartCircleSecondary"
-        app:dots_primary_color="?attr/heartCirclePrimary"
-        app:dots_secondary_color="?attr/heartCircleSecondary"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/article_author"
+        app:like_drawable="?attr/heartThemeOn"
+        app:unlike_drawable="?attr/heartThemeOff" />
 
 </android.support.constraint.ConstraintLayout>

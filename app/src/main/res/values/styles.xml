@@ -107,7 +107,7 @@
         </item>
         <item name="colorPrimary">@color/limeColorBackground</item>
         <item name="colorPrimaryDark">@color/limeColorNotification</item>
-        <item name="colorButtonNormal">@color/limeColorHighlight</item>
+        <item name="colorButtonNormal">@color/limeColorButton</item>
         <item name="colorAccent">@color/limeColorHighlight</item>
         <item name="android:textColor">@color/limeColorText</item>
         <item name="android:textColorSecondary">@color/limeSecondaryColorText</item>
