@@ -127,7 +127,7 @@ public class FavoritesFragment extends Fragment implements LoaderManager.LoaderC
 
         // Cast the list view
         ListView newsListView = (ListView) rootView.findViewById(R.id.favorites_list_view);
-
+        newsListView.setEmptyView(rootView.findViewById(R.id.empty_heart));
         // Create adapter to form each list item for each row. Pass in cursor to get the data
         mNewsCursorAdapter = new NewsCursorAdapter(getContext(), cursor);
 

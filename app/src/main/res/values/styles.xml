@@ -24,6 +24,8 @@
         <item name="heartThemeOff">@drawable/heart_off</item>
         <item name="heartCirclePrimary">@color/mainColorNotification</item>
         <item name="heartCircleSecondary">@color/mainColorHighlight2</item>
+        <item name="actionMenuTextColor">@color/mainColorBackground</item>
+        <item name="android:actionMenuTextColor">@color/mainColorBackground</item>
     </style>
     <!-- Midnight theme -->
     <style name="Midnight" parent="Theme.AppCompat.NoActionBar">
@@ -151,6 +153,11 @@
         <item name="heartCircleSecondary">@color/rainColorHighlight2</item>
     </style>
 
+    <style name="ToolBarTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:actionMenuTextColor">#FFFFFF</item>
+        <item name="actionMenuTextColor">#FFFFFF</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
 
     <style name="Widget.Button.Primary"
         parent="Widget.AppCompat.Button.Colored">

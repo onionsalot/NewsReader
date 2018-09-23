@@ -78,7 +78,7 @@ public class DetailsActivity extends AppCompatActivity{
         Glide.with(this)
                 .load(currentNews.getPicture())
                 .apply(new RequestOptions()
-                        .placeholder(R.mipmap.ic_launcher))
+                        .placeholder(R.drawable.no_image_found))
                 .into(detailImage);
 
         // Print Source in the toolbar then grab the passed in info and print to the textFields.

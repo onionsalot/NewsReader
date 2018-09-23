@@ -111,7 +111,7 @@ public class NewsAdapter extends ArrayAdapter<News>{
          a temp clipart to not make the field empty.
           */
         if (w.getPicture().equals("") || w.getPicture().equals("null")) {
-            holder.itemPicture.setImageResource(R.drawable.ic_launcher_background);
+            holder.itemPicture.setImageResource(R.drawable.no_image_found);
         } else {
             Picasso.get()
                     .load(w.getPicture())

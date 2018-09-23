@@ -1,6 +1,9 @@
 package org.example.trongnguyen.newsreader;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -54,8 +57,13 @@ public class OnBoardActivity extends AppCompatActivity{
     }
 
     public void onFinishedOnBoarding() {
-
+        // Calls the shared preference and change to true to disable new user OnBoarding
         finish();
+        SharedPreferences SP = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = SP.edit();
+        editor.putBoolean("seenOnBoard", true);
+        editor.apply();
+        startActivity(new Intent(this,MainActivity.class));
     }
     public void addDotsIndicator(int position) {
         mDots = new TextView[4];
@@ -115,4 +123,10 @@ public class OnBoardActivity extends AppCompatActivity{
         }
     };
 
+    @Override
+    public void onBackPressed() {
+        // Method called to disable the back button. Users should not be able to back out of onboarding.
+
+
+    }
 }

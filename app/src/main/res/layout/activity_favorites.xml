@@ -15,7 +15,8 @@
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/customToolbarColor"
             android:id="@+id/toolbar"
-            android:elevation="4dp"/>
+            android:elevation="4dp"
+            android:theme="@style/ToolBarTheme"/>
 
         <FrameLayout
             android:id="@+id/fragment_container"

@@ -41,18 +41,22 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d(TAG, "onCreate: MAIN'S ONCREATE HAS BEEN STARTED");
         final SharedPreferences SP = PreferenceManager.getDefaultSharedPreferences(this);
         themeChooser(SP.getString("theme", "1"));
+        PreferenceManager.setDefaultValues(this, R.xml.settings_main, false);
+        if (!SP.getBoolean("seenOnBoard",false)) {
+            startActivity(new Intent(this,OnBoardActivity.class));
+            finish();
+        }
         super.onCreate(savedInstanceState);
         // For first time runs, the preferences will not load quick enough and cause the app
         // to crash due to not having the right preferences to create a URL. This time
         // makes sure that default values are implemented first and then never read from again.
-        PreferenceManager.setDefaultValues(this, R.xml.settings_main, false);
+
         setContentView(R.layout.activity_main_fragments);
 
-        if (!SP.getBoolean("seenOnBoard",false)) {
-            startActivity(new Intent(this,OnBoardActivity.class));
-        }
+
         // Inflate the toolbar and set the title to NewsFeed. This will be our main page.
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
