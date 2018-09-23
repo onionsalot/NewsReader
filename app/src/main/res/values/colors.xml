@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- OnBoard colors -->
+    <color name="onBoard_1">#002d92</color>
+    <color name="onBoard_2">#557bd2</color>
+    <color name="onBoard_3">#b04f4f</color>
+    <color name="onBoard_4">#55327b</color>
+    <color name="onBoardDots">#696969</color>
+    <color name="onBoardDotsColored">#FFFFFF</color>
+
+
     <!-- Main Theme -->
     <color name="mainColorText">#000000</color><!-- Main Text Color -->
     <color name="mainSecondaryColorText">#26327F</color><!-- Main Text Color -->
