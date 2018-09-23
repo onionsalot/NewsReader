@@ -38,7 +38,6 @@ public final class QueryTools {
 
     public static ArrayList<News> fetchNewsData(String requestUrl) {
         URL url = createUrl(requestUrl);
-        Log.d("QueryUtils.Java", "doInBackground: Current URL " + url);
 
         String jsonResponse = "";
         try {

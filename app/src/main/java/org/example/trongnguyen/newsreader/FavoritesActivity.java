@@ -39,7 +39,6 @@ public class FavoritesActivity extends AppCompatActivity {
 
 
         if (savedInstanceState == null) {
-            Log.d(TAG, "onCreate: reloading the main fragment due to savedInstanceState being null");
             transaction.replace(R.id.fragment_container, favoritesFragment, "favorites");
             transaction.commit();
         }

@@ -42,7 +42,6 @@ public class SearchActivity extends AppCompatActivity {
 
 
         if (savedInstanceState == null) {
-            Log.d(TAG, "onCreate: reloading the main fragment due to savedInstanceState being null");
             transaction.replace(R.id.fragment_container, searchFragment, "search");
             transaction.commit();
         }

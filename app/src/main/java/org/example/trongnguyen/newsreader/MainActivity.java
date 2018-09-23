@@ -41,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.d(TAG, "onCreate: MAIN'S ONCREATE HAS BEEN STARTED");
         final SharedPreferences SP = PreferenceManager.getDefaultSharedPreferences(this);
         themeChooser(SP.getString("theme", "1"));
         PreferenceManager.setDefaultValues(this, R.xml.settings_main, false);
@@ -90,7 +89,6 @@ public class MainActivity extends AppCompatActivity {
          * will not randomly display.
          */
         if (savedInstanceState == null) {
-            Log.d(TAG, "onCreate: reloading the main fragment due to savedInstanceState being null");
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.fragment_container, mainFragment, "main");
             transaction.commit();

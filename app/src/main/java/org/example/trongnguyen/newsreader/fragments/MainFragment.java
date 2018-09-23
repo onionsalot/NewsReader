@@ -94,7 +94,6 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
          * will check if the loader at 0 is already initiated and if not, initiate again.
          *
          */
-        Log.d(TAG, "onCreate Initialized + " + savedInstanceState);
         // Retain the instance between configuration changes
         setRetainInstance(true);
 
@@ -107,7 +106,6 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
         spChangedListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
             @Override
             public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-                Log.d(TAG, "onSharedPreferenceChanged: change detected + " + sharedPreferences + key);
                 if (key.equals("layout")) {
 
                 } else if (key.equals("theme")) {
@@ -176,10 +174,8 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
         } else {
             if (savedSession != null) {
                 // Returning from backstack most likely. Do nothing
-                Log.d(TAG, "onCreateView: mAdapter is not null. Do nothing information is properly saved.");
             } else {
                 // New instance.
-                Log.d(TAG, "onCreateView: New instance. Turn on progress bar and continue on.");
                 progressBar.setVisibility(View.VISIBLE);
             }
         }
@@ -190,7 +186,6 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.d(TAG, "onItemClick: Item " + position + " was clicked");
                 // Instantiate the current news item using the parent and position
                 News news = (News) parent.getItemAtPosition(position);
                 // Pass news as a Serializable Object to the DetailsActivity class
@@ -216,7 +211,6 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
                         if (endOfList) {
                             // If end of list has been reached and variable endOfList has been activated by addItems();
                             // The following code will run to add a footer showing that the end of the list has been reached.
-                            // TODO: Make the footer not so ugly
                             Toast.makeText(getActivity(), "End of the list",
                                     Toast.LENGTH_SHORT).show();
                             doNothing = true; // Turn on doNothing so that the scrollListener will no longer do anything.
@@ -384,7 +378,6 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
         // Similar to the onPostExecute. Basically updates UI
         if (data == null) {
             // Checks if we have proper data. If we don't then return user.
-            // TODO: create an emptyView
             // Since there will be no results if data is null, we set emptyView to show users that
             // there is no results to be displayed. Also disable the progress bar.
             progressBar.setVisibility(View.INVISIBLE);
@@ -409,7 +402,6 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
          */
         if (listView.getCount() == 0) {
             int results;
-            Log.d(TAG, "onLoadFinished: current data" + data.size());
             if (data.size() < 10) {
                 results = data.size();
             } else {
@@ -426,7 +418,6 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
                 mAdapter.insert(data.get(i), i);
             }
             // Save the data into savedSession to grab more elements later when end of scroll list is reached.
-            Log.d(TAG, "onLoadFinished: data after insertion" + data.size());
             savedSession = data;
 
             // Once information is loaded, make the progress bar invisible again.
@@ -533,7 +524,6 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
                 break;
             }
             mAdapter.insert(savedSession.get(currentViewCount), mAdapter.getCount());
-            Log.d(TAG, "addItems: inserting : " + savedSession.get(currentViewCount) + " current count " + currentViewCount + " into " + (mAdapter.getCount()));
             currentViewCount++;
         }
     }
@@ -589,7 +579,6 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
         LoaderManager loaderManager = getLoaderManager();
         loaderManager.initLoader(0, null, this);
 
-        Log.d(TAG, "changeLayout: layoutValue" + layoutValue);
     }
 
     private void colorLayout(int number) {

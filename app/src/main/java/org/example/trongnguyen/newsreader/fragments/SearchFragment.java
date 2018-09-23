@@ -87,8 +87,6 @@ public class SearchFragment extends Fragment {
     }
 
     public void searchItems(View view){
-        // TODO: create a check all button
-        Log.d(TAG, "showSelectedItems: " + listView.getCheckedItemCount() );
         StringBuilder stringBuilder = new StringBuilder();
         // StringBuilder will check if user has checked each of the sources, then append the source.
         stringBuilder.append("(");
@@ -109,7 +107,6 @@ public class SearchFragment extends Fragment {
 
         String searchURL = stringBuilder.toString();
         searchURL = searchURL.replace("wallstreetjournal","wsj");
-        Log.d(TAG, "showSelectedItems: String Builder " + searchURL);
 
 
         Fragment secondFragment = new MainFragment();

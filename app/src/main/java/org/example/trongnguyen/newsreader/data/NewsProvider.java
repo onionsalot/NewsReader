@@ -41,7 +41,6 @@ public class NewsProvider extends ContentProvider {
         // when a match is found.
         sUriMatcher.addURI(NewsContract.CONTENT_AUTHORITY, NewsContract.PATH_NEWS, NEWS);
         sUriMatcher.addURI(NewsContract.CONTENT_AUTHORITY, NewsContract.PATH_NEWS + "/#", NEWS_ID);
-        // TODO: Add 2 content URIs to URI matcher
     }
 
     /**
